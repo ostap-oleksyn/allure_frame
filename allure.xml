@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Allure suite">
+
+
+    <test name="Google test">
+        <classes>
+            <class name="tests.GoogleTest" />
+        </classes>
+    </test>
+
+</suite>
