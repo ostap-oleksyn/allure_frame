@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.function.Function;
 
+@Deprecated
 public enum Condition {
     ELEMENT_IS_INVISIBLE(
             ExpectedConditions::invisibilityOfElementLocated,

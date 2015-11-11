@@ -13,7 +13,7 @@ public class HomePage extends BasePage {
 
 
     public ResultPage doSearchFor(String term) {
-        action.get(Google.SEARCH_FIELD).type(term, true);
+        action.get(Google.SEARCH_FIELD).type(term);
         return new ResultPage(driver);
     }
 

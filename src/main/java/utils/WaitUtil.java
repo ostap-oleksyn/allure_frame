@@ -1,6 +1,9 @@
 package utils;
 
 
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.ILocator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,7 +18,7 @@ public final class WaitUtil {
         this.driver = driver;
     }
 
-
+    @Deprecated
     public void until(final Condition condition, final ILocator locator, final int... timeInSeconds) {
         int timeOut;
         if (timeInSeconds.length == 0) {
@@ -27,5 +30,35 @@ public final class WaitUtil {
         wait.pollingEvery(500, TimeUnit.MILLISECONDS)
                 .withMessage("Couldn't find " + locator)
                 .until(condition.getCondition().apply(locator.get()));
+    }
+
+    public void elementIsVisible(ILocator locator, int... time) {
+        int timeOut = 30;
+        if (time.length > 0) {
+            timeOut = time[1];
+        }
+        new WebDriverWait(driver, timeOut).ignoring(ElementNotFoundException.class)
+                .withMessage(String.format("Element %s is not visible after %s seconds", locator, timeOut))
+                .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
+    }
+
+    public void elementIsInvisible(ILocator locator, int... time) {
+        int timeOut = 30;
+        if (time.length > 0) {
+            timeOut = time[1];
+        }
+        new WebDriverWait(driver, timeOut)
+                .withMessage(String.format("Element %s is visible after %s seconds", locator, timeOut))
+                .until(ExpectedConditions.invisibilityOfElementLocated(locator.get()));
+    }
+
+    public void textIsPresent(ILocator locator, String text, int... time) {
+        int timeOut = 30;
+        if (time.length > 0) {
+            timeOut = time[1];
+        }
+        new WebDriverWait(driver, timeOut)
+                .withMessage(String.format("Text '%s' is not present in %s after %s seconds", text, locator, timeOut))
+                .until(ExpectedConditions.textToBePresentInElementLocated(locator.get(), text));
     }
 }

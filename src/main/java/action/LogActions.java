@@ -47,23 +47,14 @@ public final class LogActions {
         js.executeScript(String.format("arguments[0].setAttribute('%s', '%s')", attribute, value), element);
     }
 
-    public void type(final String text, final ILocator locator, final boolean... protect) {
-        if (protect.length > 0) {
-            final String protectedText = text.replaceAll(".?", "*");
-            type(protectedText, text, locator);
-        } else {
-            type(text, locator);
-        }
-    }
-
     @Step("Typed ''{0}'' into {1}")
-    private void type(final String text, final ILocator locator) {
+    public void type(final String text, final ILocator locator) {
         driver.findElement(locator.get()).clear();
         driver.findElement(locator.get()).sendKeys(text);
     }
 
     @Step("Typed ''{0}'' into {2}")
-    private void type(final String protectedText, final String text, final ILocator locator) {
+    public void type(final String protectedText, final String text, final ILocator locator) {
         driver.findElement(locator.get()).clear();
         driver.findElement(locator.get()).sendKeys(text);
     }

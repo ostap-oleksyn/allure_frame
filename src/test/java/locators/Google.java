@@ -66,7 +66,6 @@ public enum Google implements ILocator {
         return locator;
     }
 
-
     @Override
     public String toString() {
         String logMessage;

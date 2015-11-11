@@ -27,13 +27,17 @@ public class ActionImpl {
         this.driver = driver;
     }
 
-    public void type(String text, boolean... protect) {
-        new LogActions(this.driver).type(text, locator, protect);
+    public void type(String text) {
+        if (locator.toString().toLowerCase().contains("password")) {
+            final String protectedText = text.replaceAll(".?", "*");
+            new LogActions(this.driver).type(protectedText, text, locator);
+        } else {
+            new LogActions(this.driver).type(text, locator);
+        }
     }
 
     public String getText() {
         return driver.findElement(locator.get()).getText();
-
     }
 
     public String getAttribute(final String attribute) {

@@ -14,7 +14,7 @@ public class TestRunner{
 
     protected WebDriver driver;
     protected Action action;
-    protected WaitUtil wait;
+    protected WaitUtil waitUntil;
     private static final String URL = "https://www.google.com.ua";
 
     public WebDriver getDriver() {
@@ -25,7 +25,7 @@ public class TestRunner{
     public void setUp() {
         driver = new FirefoxDriver();
         action = new Action(driver);
-        wait = new WaitUtil(driver);
+        waitUntil = new WaitUtil(driver);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         action.navigate(URL);
     }
