@@ -31,15 +31,15 @@ public enum Google implements ILocator {
     START_HERE("Start Here",
             LocatorType.BY_XPATH,
             ".//*[@id='nav-flyout-ya-newCust']/a"),
-    NAV_MENU("NAV_MENU",
-            LocatorType.BY_ID,
-            "nav-flyout-yourAccount");
+    SELECT("SELECT",
+            LocatorType.BY_XPATH,
+            ".//select[@name='mydropdown']//option[@value='%s']");
 
     private String name;
     private LocatorType locatorType;
     private String rawLocator;
     private String modifiedLocator;
-    private int position;
+    private String position;
 
     Google(final String name, final LocatorType locatorType, final String rawLocator) {
         this.name = name;
@@ -48,6 +48,12 @@ public enum Google implements ILocator {
     }
 
     public Google at(final int position) {
+        this.position = String.valueOf(position);
+        this.modifiedLocator = String.format(this.rawLocator, position);
+        return this;
+    }
+
+    public Google at(final String position) {
         this.position = position;
         this.modifiedLocator = String.format(this.rawLocator, position);
         return this;
@@ -71,10 +77,11 @@ public enum Google implements ILocator {
         String logMessage;
         if (modifiedLocator == null) {
             logMessage = String.format("[%s > %s]", this.getClass().getSimpleName(), this.name);
+        } else if (modifiedLocator.contains("[.]")){
+            logMessage = String.format("[%s > %s] at position [1]", this.getClass().getSimpleName(), this.name);
         } else {
             logMessage = String.format("[%s > %s] at position [%s]", this.getClass().getSimpleName(), this.name, this.position);
         }
         return logMessage;
     }
-
 }

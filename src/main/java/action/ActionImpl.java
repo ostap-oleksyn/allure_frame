@@ -3,18 +3,20 @@ package action;
 
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ui.ILocator;
 import utils.LogUtil;
 
 import java.util.concurrent.TimeUnit;
 
 
-public class ActionImpl {
+public final class ActionImpl {
 
-    private ILocator locator;
+    final private ILocator locator;
     private ILocator locator1;
-    private WebDriver driver;
-
+    final private WebDriver driver;
 
     public ActionImpl(final ILocator locator, final WebDriver driver) {
         this.locator = locator;
@@ -27,7 +29,14 @@ public class ActionImpl {
         this.driver = driver;
     }
 
-    public void type(String text) {
+    private WebElement getElement(final ILocator locator) {
+        return new WebDriverWait(driver, 15)
+                .ignoring(NoSuchElementException.class)
+                .withMessage("Element " + locator + " was not found after default 30 second timeout")
+                .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
+    }
+
+    public void type(final String text) {
         if (locator.toString().toLowerCase().contains("password")) {
             final String protectedText = text.replaceAll(".?", "*");
             new LogActions(this.driver).type(protectedText, text, locator);
@@ -37,18 +46,18 @@ public class ActionImpl {
     }
 
     public String getText() {
-        return driver.findElement(locator.get()).getText();
+        return getElement(locator).getText();
     }
 
     public String getAttribute(final String attribute) {
-        return driver.findElement(locator.get()).getAttribute(attribute);
+        return getElement(locator).getAttribute(attribute);
     }
 
     public void setAttribute(final String attribute, final String value) {
         new LogActions(this.driver).setAttribute(locator, attribute, value);
     }
-
-    public boolean isDisplayed(int... timeout) {
+    //TODO - Remove implicit waits and refactor!!!
+    public boolean isDisplayed(final int... timeout) {
 
         boolean isDisplayed;
         if (timeout.length > 0) {
@@ -69,7 +78,7 @@ public class ActionImpl {
     }
 
     public Long getNumber() {
-        final String text = driver.findElement(locator.get()).getText().replaceAll("\\D", "");
+        final String text = getElement(locator).getText().replaceAll("\\D", "");
         if (text.length() == 0) {
             throw new IllegalStateException("Element has no numbers in it.");
         }

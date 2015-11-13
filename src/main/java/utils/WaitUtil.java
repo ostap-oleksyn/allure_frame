@@ -2,6 +2,7 @@ package utils;
 
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ui.ILocator;
@@ -32,7 +33,7 @@ public final class WaitUtil {
                 .until(condition.getCondition().apply(locator.get()));
     }
 
-    public void elementIsVisible(ILocator locator, int... time) {
+    public void elementIsVisible(final ILocator locator, final int... time) {
         int timeOut = 30;
         if (time.length > 0) {
             timeOut = time[1];
@@ -42,7 +43,7 @@ public final class WaitUtil {
                 .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
     }
 
-    public void elementIsInvisible(ILocator locator, int... time) {
+    public void elementIsInvisible(final ILocator locator, final int... time) {
         int timeOut = 30;
         if (time.length > 0) {
             timeOut = time[1];
@@ -52,7 +53,7 @@ public final class WaitUtil {
                 .until(ExpectedConditions.invisibilityOfElementLocated(locator.get()));
     }
 
-    public void textIsPresent(ILocator locator, String text, int... time) {
+    public void textIsPresent(final ILocator locator, final String text, final int... time) {
         int timeOut = 30;
         if (time.length > 0) {
             timeOut = time[1];
@@ -60,5 +61,10 @@ public final class WaitUtil {
         new WebDriverWait(driver, timeOut)
                 .withMessage(String.format("Text '%s' is not present in %s after %s seconds", text, locator, timeOut))
                 .until(ExpectedConditions.textToBePresentInElementLocated(locator.get(), text));
+    }
+
+    public void pageIsReady() {
+        new WebDriverWait(driver, 30)
+                .until((ExpectedCondition<Boolean>) webDriver -> ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("loading"));
     }
 }

@@ -6,7 +6,7 @@ import ui.ILocator;
 
 import java.util.List;
 
-public class Action {
+public final class Action {
 
     private WebDriver driver;
 

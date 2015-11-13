@@ -26,7 +26,9 @@ public class TestRunner{
         driver = new FirefoxDriver();
         action = new Action(driver);
         waitUntil = new WaitUtil(driver);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+       //TODO - Remove implicit waits!!!
+//        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         action.navigate(URL);
     }
 
