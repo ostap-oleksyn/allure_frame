@@ -8,14 +8,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import utils.WaitUtil;
 
-import java.util.concurrent.TimeUnit;
+public class TestRunner {
 
-public class TestRunner{
-
-    protected WebDriver driver;
-    protected Action action;
+    private WebDriver driver;
     protected WaitUtil waitUntil;
-    private static final String URL = "https://www.google.com.ua";
 
     public WebDriver getDriver() {
         return driver;
@@ -24,12 +20,12 @@ public class TestRunner{
     @BeforeClass
     public void setUp() {
         driver = new FirefoxDriver();
-        action = new Action(driver);
         waitUntil = new WaitUtil(driver);
         driver.manage().window().maximize();
-       //TODO - Remove implicit waits!!!
-//        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        action.navigate(URL);
+    }
+
+    protected Action action(){
+        return new Action(driver);
     }
 
     @AfterClass

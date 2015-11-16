@@ -2,38 +2,44 @@ package action;
 
 
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ui.ILocator;
-import utils.LogUtil;
+import ui.LocatorImpl;
 
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 
 public final class ActionImpl {
 
-    final private ILocator locator;
-    private ILocator locator1;
+    final private LocatorImpl locator;
+    private LocatorImpl locator1;
     final private WebDriver driver;
 
-    public ActionImpl(final ILocator locator, final WebDriver driver) {
+    public ActionImpl(final LocatorImpl locator, final WebDriver driver) {
         this.locator = locator;
         this.driver = driver;
     }
 
-    public ActionImpl(final ILocator locator, final WebDriver driver, final ILocator locator1) {
+    public ActionImpl(final LocatorImpl locator, final WebDriver driver, final LocatorImpl locator1) {
         this.locator = locator;
         this.locator1 = locator1;
         this.driver = driver;
     }
 
-    private WebElement getElement(final ILocator locator) {
-        return new WebDriverWait(driver, 15)
+    private WebElement getElement(final LocatorImpl locator) {
+        final int timeOut = 15;
+        return new WebDriverWait(driver, timeOut)
                 .ignoring(NoSuchElementException.class)
-                .withMessage("Element " + locator + " was not found after default 30 second timeout")
+                .withMessage("Element " + locator + " was not visible after default " + timeOut + " second timeout")
                 .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
+    }
+
+    public List<WebElement> getList() {
+        getElement(locator);
+        return driver.findElements(locator.get());
     }
 
     public void type(final String text) {
@@ -56,33 +62,27 @@ public final class ActionImpl {
     public void setAttribute(final String attribute, final String value) {
         new LogActions(this.driver).setAttribute(locator, attribute, value);
     }
-    //TODO - Remove implicit waits and refactor!!!
-    public boolean isDisplayed(final int... timeout) {
 
+    public boolean isDisplayed() {
         boolean isDisplayed;
-        if (timeout.length > 0) {
-            driver.manage().timeouts().implicitlyWait(timeout.length, TimeUnit.SECONDS);
-        }
         try {
-            isDisplayed = driver.findElement(locator.get()).isDisplayed();
-        } catch (NoSuchElementException e) {
-            LogUtil.log("FAIL: " + locator.toString() + " is not displayed");
+            isDisplayed = getElement(locator).isDisplayed();
+        } catch (TimeoutException e) {
             isDisplayed = false;
         }
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         return isDisplayed;
     }
 
     public int getCount() {
-        return driver.findElements(locator.get()).size();
+        return getList().size();
     }
 
-    public Long getNumber() {
+    public int getNumber() {
         final String text = getElement(locator).getText().replaceAll("\\D", "");
         if (text.length() == 0) {
             throw new IllegalStateException("Element has no numbers in it.");
         }
-        return Long.parseLong(text);
+        return Integer.parseInt(text);
     }
 
     public void mouseOverAndClick() {
