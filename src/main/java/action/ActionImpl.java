@@ -14,27 +14,41 @@ import java.util.List;
 
 public final class ActionImpl {
 
-    final private LocatorImpl locator;
+    private final LocatorImpl locator;
     private LocatorImpl locator1;
-    final private WebDriver driver;
+    private final WebDriver driver;
+    private final int timeOut;
 
-    public ActionImpl(final LocatorImpl locator, final WebDriver driver) {
+    public ActionImpl(final LocatorImpl locator, final WebDriver driver, final int timeOut) {
         this.locator = locator;
         this.driver = driver;
+        this.timeOut = timeOut;
     }
 
-    public ActionImpl(final LocatorImpl locator, final WebDriver driver, final LocatorImpl locator1) {
+    public ActionImpl(final LocatorImpl locator, final WebDriver driver, final LocatorImpl locator1, final int timeOut) {
         this.locator = locator;
         this.locator1 = locator1;
         this.driver = driver;
+        this.timeOut = timeOut;
     }
 
     private WebElement getElement(final LocatorImpl locator) {
-        final int timeOut = 15;
-        return new WebDriverWait(driver, timeOut)
+        int waitTime;
+        if (this.timeOut > 0) {
+            waitTime = timeOut;
+        } else {
+            waitTime = 15;
+        }
+
+        return new WebDriverWait(driver, waitTime)
                 .ignoring(NoSuchElementException.class)
-                .withMessage("Element " + locator + " was not visible after default " + timeOut + " second timeout")
+                .withMessage("Element " + locator + " was not visible after " + waitTime + " second timeout")
                 .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
+    }
+
+    public WebElement getWebElement(){
+        return
+        getElement(locator);
     }
 
     public List<WebElement> getList() {
@@ -45,9 +59,9 @@ public final class ActionImpl {
     public void type(final String text) {
         if (locator.toString().toLowerCase().contains("password")) {
             final String protectedText = text.replaceAll(".?", "*");
-            new LogActions(this.driver).type(protectedText, text, locator);
+            new LogActions(this.driver, timeOut).type(protectedText, text, locator);
         } else {
-            new LogActions(this.driver).type(text, locator);
+            new LogActions(this.driver, timeOut).type(text, locator);
         }
     }
 
@@ -60,7 +74,7 @@ public final class ActionImpl {
     }
 
     public void setAttribute(final String attribute, final String value) {
-        new LogActions(this.driver).setAttribute(locator, attribute, value);
+        new LogActions(this.driver, timeOut).setAttribute(locator, attribute, value);
     }
 
     public boolean isDisplayed() {
@@ -86,35 +100,35 @@ public final class ActionImpl {
     }
 
     public void mouseOverAndClick() {
-        new LogActions(this.driver).mouseOverAndClick(locator, locator1);
+        new LogActions(this.driver, timeOut).mouseOverAndClick(locator, locator1);
     }
 
     public void click() {
-        new LogActions(this.driver).click(locator);
+        new LogActions(this.driver, timeOut).click(locator);
     }
 
     public void selectByText(final String text) {
-        new LogActions(this.driver).selectByText(locator, text);
+        new LogActions(this.driver, timeOut).selectByText(locator, text);
     }
 
     public void selectByValue(final String value) {
-        new LogActions(this.driver).selectByValue(locator, value);
+        new LogActions(this.driver, timeOut).selectByValue(locator, value);
     }
 
     public void selectByIndex(final int index) {
-        new LogActions(this.driver).selectByIndex(locator, index);
+        new LogActions(this.driver, timeOut).selectByIndex(locator, index);
     }
 
     public void deselectByText(final String text) {
-        new LogActions(this.driver).deselectByText(locator, text);
+        new LogActions(this.driver, timeOut).deselectByText(locator, text);
     }
 
     public void deselectByValue(final String value) {
-        new LogActions(this.driver).deselectByValue(locator, value);
+        new LogActions(this.driver, timeOut).deselectByValue(locator, value);
     }
 
     public void deselectByIndex(final int index) {
-        new LogActions(this.driver).deselectByIndex(locator, index);
+        new LogActions(this.driver, timeOut).deselectByIndex(locator, index);
     }
 
 

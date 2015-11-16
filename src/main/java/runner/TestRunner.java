@@ -2,10 +2,12 @@ package runner;
 
 
 import action.Action;
+import action.PageAction;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import ui.ILocator;
 import utils.WaitUtil;
 
 public class TestRunner {
@@ -24,9 +26,14 @@ public class TestRunner {
         driver.manage().window().maximize();
     }
 
-    protected Action action(){
-        return new Action(driver);
+    protected Action Action(ILocator locator){
+        return new Action(driver, locator);
     }
+
+    protected PageAction Page(){
+        return new PageAction(driver);
+    }
+
 
     @AfterClass
     public void tearDown() {

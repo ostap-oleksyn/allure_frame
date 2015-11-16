@@ -57,7 +57,7 @@ public enum Gmail implements ILocator {
     private String name;
     private LocatorType locatorType;
     private String rawLocator;
-    private String position;
+
 
     Gmail(final String name, final LocatorType locatorType, final String rawLocator) {
         this.name = name;
@@ -77,30 +77,5 @@ public enum Gmail implements ILocator {
         return rawLocator;
     }
 
-    public String getPosition() {
-        return position;
-    }
 
-    public void resetPosition() {
-        this.position = null;
-    }
-
-    public Gmail at(final int position) {
-        verify();
-        this.position = String.valueOf(position);
-        return this;
-    }
-
-    public Gmail at(final String position) {
-        verify();
-        this.position = position;
-        return this;
-    }
-
-    private void verify() {
-        if (!this.rawLocator.contains("%s")) {
-            throw new IllegalStateException(String.format("Locator [%s > %s] doesn't have a modifier: %s",
-                    this.getClass().getSimpleName(), name, rawLocator));
-        }
-    }
 }

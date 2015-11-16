@@ -8,29 +8,33 @@ public class LocatorImpl {
 
     final private ILocator locator;
     final private LocatorType locatorType;
-    private String position;
+    final private String position;
     private String rawLocator;
     private String modifiedLocator;
 
 
-    public LocatorImpl(final ILocator locator) {
+    public LocatorImpl(final ILocator locator, final String position) {
         this.locator = locator;
-        this.locatorType = locator.getLocatorType();
+        this.position = position;
         this.rawLocator = locator.getRawLocator();
-        verify();
+        verifyModifier();
+        this.locatorType = locator.getLocatorType();
+        modify();
     }
 
+    private void verifyModifier() {
+        if (position != null && !this.rawLocator.contains("%s")) {
+            throw new IllegalArgumentException(String.format("Locator [%s > %s] doesn't have a modifier: %s",
+                    locator.getClass().getSimpleName(), locator.getName(), rawLocator));
+        }
+    }
 
-    private void verify() {
-        if (position == null) {
-            this.modifiedLocator = null;
-            if (this.rawLocator.contains("%s")) {
-                this.rawLocator = this.rawLocator.replace("%s", ".");
-            }
-        } else {
+    private void modify() {
+        if (position == null && this.rawLocator.contains("%s")) {
+            this.rawLocator = this.rawLocator.replace("%s", ".");
+        } else if (position != null && this.rawLocator.contains("%s")) {
             this.modifiedLocator = String.format(this.rawLocator, position);
         }
-        locator.resetPosition();
     }
 
     public By get() {

@@ -14,6 +14,6 @@ public class ResultPage extends BasePage {
 
     @Step("Click images tab")
     public void clickImageTab(){
-       action.get(Google.IMAGES_TAB).click();
+       action(Google.IMAGES_TAB).click();
     }
 }

@@ -9,33 +9,97 @@ import java.util.List;
 
 public final class Action {
 
-    final private WebDriver driver;
+    private final WebDriver driver;
+    private ILocator locator;
+    private int timeOut;
+    private String position;
 
-    public Action(final WebDriver driver) {
+    public Action(final WebDriver driver, final ILocator locator) {
         this.driver = driver;
+        this.locator = locator;
     }
 
-    public ActionImpl get(final ILocator locator) {
-        return new ActionImpl(new LocatorImpl(locator), driver);
+
+    public Action at(final int position) {
+        this.position = String.valueOf(position);
+        return this;
+    }
+
+    public Action at(final String position) {
+        this.position = position;
+        return this;
+    }
+
+    public Action wait(final int timeOut) {
+        this.timeOut = timeOut;
+        return this;
+    }
+
+    public void click() {
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).click();
     }
 
     public void mouseOverAndClick(final ILocator overLocator, final ILocator clickLocator) {
-        new ActionImpl(new LocatorImpl(overLocator), this.driver, new LocatorImpl(clickLocator)).mouseOverAndClick();
+        new ActionImpl(new LocatorImpl(overLocator, position), this.driver, new LocatorImpl(clickLocator, position), timeOut).mouseOverAndClick();
     }
 
-    public String getTitle() {
-        return driver.getTitle();
+    public void type(final String text) {
+        new ActionImpl(new LocatorImpl(locator, position),driver, timeOut).type(text);
     }
 
-    public void navigate(final String url) {
-        new LogActions(this.driver).navigate(url);
+    public WebElement getWebElement(){
+        return new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).getWebElement();
+    }
+
+    public String getText() {
+        return new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).getText();
+    }
+
+    public String getAttribute(final String attribute) {
+        return new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).getAttribute(attribute);
+    }
+
+    public void setAttribute(final String attribute, final String value) {
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).setAttribute(attribute, value);
+    }
+
+    public boolean isDisplayed() {
+        return new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).isDisplayed();
+    }
+
+    public int getCount() {
+        return new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).getCount();
+    }
+
+    public int getNumber() {
+        return new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).getNumber();
+    }
+
+    public void selectByText(final String text) {
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByText(text);
+    }
+
+    public void selectByValue(final String value) {
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByValue(value);
+    }
+
+    public void selectByIndex(final int index) {
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByIndex(index);
+    }
+
+    public void deselectByText(final String text) {
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).deselectByText(text);
+    }
+
+    public void deselectByValue(final String value) {
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).deselectByValue(value);
+    }
+
+    public void deselectByIndex(final int index) {
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).deselectByIndex(index);
     }
 
     public List<WebElement> getList(final ILocator locator) {
-        return new ActionImpl(new LocatorImpl(locator), this.driver).getList();
-    }
-
-    public void takeScreenshot() {
-        new LogActions(this.driver).takeScreenshot();
+        return new ActionImpl(new LocatorImpl(locator, position), this.driver, timeOut).getList();
     }
 }

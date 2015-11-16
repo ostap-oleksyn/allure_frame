@@ -37,7 +37,6 @@ public enum Google implements ILocator {
     private String name;
     private LocatorType locatorType;
     private String rawLocator;
-    private String position;
 
     Google(final String name, final LocatorType locatorType, final String rawLocator) {
         this.name = name;
@@ -55,35 +54,6 @@ public enum Google implements ILocator {
 
     public String getRawLocator() {
         return rawLocator;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void resetPosition() {
-        this.position = null;
-    }
-
-    public Google at(final int position) {
-        verify();
-        this.position = String.valueOf(position);
-        return this;
-
-    }
-
-    public Google at(final String position) {
-        verify();
-        this.position = String.valueOf(position);
-        return this;
-
-    }
-
-    private void verify() {
-        if (!this.rawLocator.contains("%s")) {
-            throw new IllegalStateException(String.format("Locator [%s > %s] doesn't have a modifier: %s",
-                    this.getClass().getSimpleName(), name, rawLocator));
-        }
     }
 
 }

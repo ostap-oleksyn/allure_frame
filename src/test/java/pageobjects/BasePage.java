@@ -3,15 +3,20 @@ package pageobjects;
 
 import action.Action;
 import org.openqa.selenium.WebDriver;
+import ui.ILocator;
 
 public class BasePage {
 
     protected WebDriver driver;
-    protected Action action;
+
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        this.action = new Action(this.driver);
+    }
+
+
+    protected Action action(ILocator locator){
+        return new Action(driver, locator);
     }
 
 }
