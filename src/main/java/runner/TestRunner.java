@@ -14,7 +14,6 @@ public class TestRunner {
 
     private WebDriver driver;
     protected WaitUtil waitUntil;
-
     public WebDriver getDriver() {
         return driver;
     }
@@ -22,16 +21,25 @@ public class TestRunner {
     @BeforeClass
     public void setUp() {
         driver = new FirefoxDriver();
-        waitUntil = new WaitUtil(driver);
         driver.manage().window().maximize();
     }
+
+
 
     protected Action Action(ILocator locator){
         return new Action(driver, locator);
     }
 
+    protected Action Action(ILocator overLocator, ILocator clickLocator){
+        return new Action(driver, overLocator, clickLocator);
+    }
+
     protected PageAction Page(){
         return new PageAction(driver);
+    }
+
+    protected WaitUtil WaitUntil(ILocator locator){
+        return new WaitUtil(driver, locator);
     }
 
 

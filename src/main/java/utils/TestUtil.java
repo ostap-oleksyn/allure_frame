@@ -13,6 +13,7 @@ public final class TestUtil {
     }
 
     public static void sleep(final int seconds) {
+        LogUtil.log("TEST: Sleep for " + seconds + " second");
         TimerImpl.sleep((long) (seconds * 1000));
     }
 

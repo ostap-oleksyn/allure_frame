@@ -27,12 +27,12 @@ public enum Google implements ILocator {
     ACCOUNT_MENU("Account Menu",
             LocatorType.BY_XPATH,
             ".//*[@id='nav-link-yourAccount']"),
-    START_HERE("Start Here",
+    AMAZON_CLICK("Amazon click",
             LocatorType.BY_XPATH,
-            ".//*[@id='nav-flyout-ya-newCust']/a"),
-    SELECT("SELECT",
+            ".//*[@id='nav-flyout-shopAll']/div[2]/a/span"),
+    AMAZON_OVER("Amazon over",
             LocatorType.BY_XPATH,
-            ".//select[@name='mydropdown']//option[@value='%s']");
+            ".//*[@id='nav-link-shopall']/span[2]");
 
     private String name;
     private LocatorType locatorType;

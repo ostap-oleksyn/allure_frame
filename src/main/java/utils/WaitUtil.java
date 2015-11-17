@@ -5,59 +5,66 @@ import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ui.ILocator;
 import ui.LocatorImpl;
-
-import java.util.concurrent.TimeUnit;
 
 public final class WaitUtil {
 
     final private WebDriver driver;
+    final private ILocator locator;
+    private String position;
+    private int timeOut = 30;
 
-    public WaitUtil(final WebDriver driver) {
+    public WaitUtil(final WebDriver driver, final ILocator locator) {
         this.driver = driver;
+        this.locator = locator;
     }
 
-    @Deprecated
-    public void until(final Condition condition, final LocatorImpl locator, final int... timeInSeconds) {
-        int timeOut;
-        if (timeInSeconds.length == 0) {
-            timeOut = 10;
-        } else {
-            timeOut = timeInSeconds[0];
-        }
-        final WebDriverWait wait = new WebDriverWait(driver, timeOut);
-        wait.pollingEvery(500, TimeUnit.MILLISECONDS)
-                .withMessage("Couldn't find " + locator)
-                .until(condition.getCondition().apply(locator.get()));
+    public WaitUtil at(final int position) {
+        this.position = String.valueOf(position);
+        return this;
     }
 
-    public void elementIsVisible(final LocatorImpl locator, final int... time) {
-        int timeOut = 30;
+    public WaitUtil at(final String position) {
+        this.position = position;
+        return this;
+    }
+
+    public void isVisible(final int... time) {
         if (time.length > 0) {
-            timeOut = time[1];
+            timeOut = time[0];
         }
         new WebDriverWait(driver, timeOut).ignoring(ElementNotFoundException.class)
-                .withMessage(String.format("Element %s is not visible after %s seconds", locator, timeOut))
-                .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
+                .withMessage(String.format("Element %s is not visible after %s seconds", new LocatorImpl(locator, position), timeOut))
+                .until(ExpectedConditions.visibilityOfElementLocated(new LocatorImpl(locator, position).get()));
     }
 
-    public void elementIsInvisible(final LocatorImpl locator, final int... time) {
-        int timeOut = 30;
+    public void isInvisible(final int... time) {
         if (time.length > 0) {
-            timeOut = time[1];
+            timeOut = time[0];
         }
         new WebDriverWait(driver, timeOut)
-                .withMessage(String.format("Element %s is visible after %s seconds", locator, timeOut))
-                .until(ExpectedConditions.invisibilityOfElementLocated(locator.get()));
+                .withMessage(String.format("Element %s is still visible after %s seconds", new LocatorImpl(locator, position), timeOut))
+                .until(ExpectedConditions.invisibilityOfElementLocated(new LocatorImpl(locator, position).get()));
     }
 
-    public void textIsPresent(final LocatorImpl locator, final String text, final int... time) {
-        int timeOut = 30;
+    public void isPresent(final int... time) {
         if (time.length > 0) {
-            timeOut = time[1];
+            timeOut = time[0];
         }
         new WebDriverWait(driver, timeOut)
-                .withMessage(String.format("Text '%s' is not present in %s after %s seconds", text, locator, timeOut))
-                .until(ExpectedConditions.textToBePresentInElementLocated(locator.get(), text));
+                .withMessage(String.format("Element %s is not present after %s seconds", new LocatorImpl(locator, position), timeOut))
+                .until(ExpectedConditions.presenceOfElementLocated(new LocatorImpl(locator, position).get()));
     }
+
+    public void hasText(final String text, final int... time) {
+        if (time.length > 0) {
+            timeOut = time[0];
+        }
+        new WebDriverWait(driver, timeOut)
+                .withMessage(String.format("Text '%s' is not present in %s after %s seconds", text, new LocatorImpl(locator, position), timeOut))
+                .until(ExpectedConditions.textToBePresentInElementLocated(new LocatorImpl(locator, position).get(), text));
+    }
+
+
 }

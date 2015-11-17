@@ -3,6 +3,7 @@ package action;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import ui.ILocator;
 
 public final class PageAction {
 
@@ -25,14 +26,15 @@ public final class PageAction {
     }
 
     public void switchToFrame(final int frameIndex) {
-       new LogActions(driver).switchToFrame(frameIndex);
+        new LogActions(driver).switchToFrame(frameIndex);
     }
 
     public void switchToFrame(final String frameName) {
         new LogActions(driver).switchToFrame(frameName);
     }
 
-    public void switchToFrame(final WebElement element) {
+    public void switchToFrame(final ILocator locator) {
+        final WebElement element = new Action(driver, locator).getWebElement();
         new LogActions(driver).switchToFrame(element);
     }
 

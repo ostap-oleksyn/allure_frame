@@ -24,7 +24,7 @@ public class LocatorImpl {
 
     private void verifyModifier() {
         if (position != null && !this.rawLocator.contains("%s")) {
-            throw new IllegalArgumentException(String.format("Locator [%s > %s] doesn't have a modifier: %s",
+            throw new IllegalArgumentException(String.format("Locator [%s > %s] doesn't have a '%%s' modifier: %s",
                     locator.getClass().getSimpleName(), locator.getName(), rawLocator));
         }
     }

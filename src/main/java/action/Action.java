@@ -10,7 +10,8 @@ import java.util.List;
 public final class Action {
 
     private final WebDriver driver;
-    private ILocator locator;
+    final private ILocator locator;
+    private ILocator clickLocator;
     private int timeOut;
     private String position;
 
@@ -19,6 +20,11 @@ public final class Action {
         this.locator = locator;
     }
 
+    public Action(final WebDriver driver, final ILocator locator, final ILocator clickLocator) {
+        this.driver = driver;
+        this.locator = locator;
+        this.clickLocator = clickLocator;
+    }
 
     public Action at(final int position) {
         this.position = String.valueOf(position);
@@ -39,8 +45,11 @@ public final class Action {
         new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).click();
     }
 
-    public void mouseOverAndClick(final ILocator overLocator, final ILocator clickLocator) {
-        new ActionImpl(new LocatorImpl(overLocator, position), this.driver, new LocatorImpl(clickLocator, position), timeOut).mouseOverAndClick();
+    public void mouseOverAndClick() {
+        if (clickLocator == null){
+            throw new IllegalArgumentException("Only one locator was passed to Action() method");
+        }
+        new ActionImpl(new LocatorImpl(locator, position), this.driver, new LocatorImpl(clickLocator, null), timeOut).mouseOverAndClick();
     }
 
     public void type(final String text) {
