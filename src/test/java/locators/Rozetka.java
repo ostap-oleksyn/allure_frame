@@ -4,29 +4,26 @@ package locators;
 import ui.ILocator;
 import ui.LocatorType;
 
-public enum Gmail implements ILocator {
+public enum Rozetka implements ILocator {
 
-    MAIL_FIELD("Mail field",
-            LocatorType.BY_ID,
-            "Email"),
-    PASSWORD_FIELD("Password field",
-            LocatorType.BY_ID,
-            "Passwd"),
-    NEXT_BUTTON("Next button",
-            LocatorType.BY_ID,
-            "next"),
-    SUBMIT_BUTTON("Submit button",
-            LocatorType.BY_ID,
-            "signIn"),
-    EMAIL_DISPLAY("Email display",
-            LocatorType.BY_ID,
-            "email-display"),
-    SEARCH_FIELD("Serch field",
-            LocatorType.BY_ID,
-            "gbqfq"),
-    LETTERS_OVERALL("Letters overall number",
+    PERSONAL_LINK("Enter personal cabinet",
             LocatorType.BY_XPATH,
-            ".//*[@id=':hz']/span/b[3]"),
+            ".//*[@id='header_user_menu_parent']/a"),
+    LOGIN_FIELD("Login field",
+            LocatorType.BY_XPATH,
+            ".//*[@class='popup-css popup-auth']//input[@name='login']"),
+    PASSWORD_FIELD("Password field",
+            LocatorType.BY_XPATH,
+            ".//*[@class='popup-css popup-auth']//input[@name='password']"),
+    SEARCH_FIELD("Search field",
+            LocatorType.BY_XPATH,
+            ".//*[@id='search']/form/div[1]/div[2]/input"),
+    LOGIN_BUTTON("Login button",
+            LocatorType.BY_XPATH,
+            ".//*[@class='popup-css popup-auth']//button"),
+    RESULT_LINK("Result link",
+            LocatorType.BY_XPATH,
+            "(.//*[@class='g-i-list-title'])[%s]"),
     LETTERS_TABLE_ROW("Letters table row",
             LocatorType.BY_XPATH,
             ".//tr[@class='zA yO'][%s]"),
@@ -59,7 +56,7 @@ public enum Gmail implements ILocator {
     private String rawLocator;
 
 
-    Gmail(final String name, final LocatorType locatorType, final String rawLocator) {
+    Rozetka(final String name, final LocatorType locatorType, final String rawLocator) {
         this.name = name;
         this.locatorType = locatorType;
         this.rawLocator = rawLocator;

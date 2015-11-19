@@ -1,5 +1,6 @@
 package action;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ui.ILocator;
@@ -54,6 +55,11 @@ public final class Action {
 
     public void type(final String text) {
         new ActionImpl(new LocatorImpl(locator, position),driver, timeOut).type(text);
+    }
+    //TODO - Refactor ti use miltiple keys?
+    public void sendKeys(Keys keys){
+        final String keyName = keys.name();
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).sendKeys(keys, keyName);
     }
 
     public WebElement getWebElement(){

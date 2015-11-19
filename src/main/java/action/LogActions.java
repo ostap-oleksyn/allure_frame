@@ -68,6 +68,11 @@ public final class LogActions {
         ((JavascriptExecutor)driver).executeScript(String.format("arguments[0].setAttribute('%s', '%s')", attribute, value), element);
     }
 
+    @Step("Sent keys ''{1}'' to ''{2}''")
+    public void sendKeys(Keys keys, String keyName, LocatorImpl locator){
+        getElement(locator).sendKeys(keys);
+    }
+
     @Step("Typed ''{0}'' into {1}")
     public void type(final String text, final LocatorImpl locator) {
         getElement(locator).clear();

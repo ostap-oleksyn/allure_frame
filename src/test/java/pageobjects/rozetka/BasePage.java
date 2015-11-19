@@ -1,21 +1,18 @@
-package runner;
+package pageobjects.rozetka;
 
 
 import action.Action;
 import action.PageAction;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import ui.ILocator;
 import utils.WaitUtil;
 
-public class TestRunner {
+public class BasePage {
 
-    private WebDriver driver;
+    protected WebDriver driver;
 
-    public WebDriver getDriver() {
-        return driver;
+    public BasePage(WebDriver driver) {
+        this.driver = driver;
     }
 
     protected Action Action(ILocator locator) {
@@ -34,16 +31,5 @@ public class TestRunner {
         return new WaitUtil(driver, locator);
     }
 
-    @BeforeClass
-    public void setUp() {
-        driver = new FirefoxDriver();
-        driver.manage().window().maximize();
-    }
-
-    @AfterClass
-    public void tearDown() {
-        driver.quit();
-    }
 }
-
 

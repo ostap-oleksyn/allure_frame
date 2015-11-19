@@ -29,7 +29,7 @@ public final class WaitUtil {
         this.position = position;
         return this;
     }
-
+//TODO - use ActionImpl getWebelement()?
     public void isVisible(final int... time) {
         if (time.length > 0) {
             timeOut = time[0];

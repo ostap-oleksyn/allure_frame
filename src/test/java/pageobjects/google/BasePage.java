@@ -1,4 +1,4 @@
-package pageobjects;
+package pageobjects.google;
 
 
 import action.Action;

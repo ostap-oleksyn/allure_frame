@@ -1,10 +1,7 @@
 package action;
 
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ui.LocatorImpl;
@@ -63,6 +60,10 @@ public final class ActionImpl {
         } else {
             new LogActions(this.driver, timeOut).type(text, locator);
         }
+    }
+
+    public void sendKeys(final Keys keys, final String keyName) {
+        new LogActions(driver, timeOut).sendKeys(keys, keyName, locator);
     }
 
     public String getText() {

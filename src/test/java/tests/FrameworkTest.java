@@ -2,24 +2,22 @@ package tests;
 
 import listeners.TestListener;
 import locators.Google;
-import org.openqa.selenium.By;
+import locators.Rozetka;
+import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import pageobjects.rozetka.HomePage;
+import pageobjects.rozetka.ResultPage;
 import ru.yandex.qatools.allure.annotations.Severity;
 import ru.yandex.qatools.allure.model.SeverityLevel;
 import runner.TestRunner;
 import utils.LogUtil;
 import utils.TestUtil;
-import utils.WaitUtil;
-
-import java.util.concurrent.TimeUnit;
 
 
 @Listeners(TestListener.class)
-public class GoogleTest extends TestRunner {
-
-
-    @Test()
+public class FrameworkTest extends TestRunner {
+    @Test(enabled = false)
     @Severity(SeverityLevel.MINOR)
     public void googleTest() {
         Page().navigateTo("https://google.com");
@@ -52,7 +50,28 @@ public class GoogleTest extends TestRunner {
         LogUtil.log(t4);
 
 
+    }
 
+    @Test()
+    @Severity(SeverityLevel.CRITICAL)
+    public void rozetkaTest() {
+        Page().navigateTo("https://rozetka.com.ua");
+        HomePage homePage = new HomePage(getDriver());
+
+        homePage.login();
+
+        WaitUntil(Rozetka.PERSONAL_LINK).hasText("Остап Олексин");
+
+        String searchTerm = "gtx 960";
+        ResultPage resultPage = homePage.doSearchFor(searchTerm);
+
+        int numberOfResults = Action(Rozetka.RESULT_LINK).getCount();
+
+        for (int i = 1; i <= numberOfResults; i++){
+            String result = Action(Rozetka.RESULT_LINK).at(i).getText();
+            LogUtil.log(result);
+            Assert.assertTrue(result.toLowerCase().contains(searchTerm));
+        }
 
     }
 }
