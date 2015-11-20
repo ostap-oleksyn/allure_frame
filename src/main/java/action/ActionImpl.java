@@ -1,7 +1,10 @@
 package action;
 
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ui.LocatorImpl;
@@ -43,9 +46,9 @@ public final class ActionImpl {
                 .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
     }
 
-    public WebElement getWebElement(){
+    public WebElement getWebElement() {
         return
-        getElement(locator);
+                getElement(locator);
     }
 
     public List<WebElement> getList() {
@@ -62,8 +65,8 @@ public final class ActionImpl {
         }
     }
 
-    public void sendKeys(final Keys keys, final String keyName) {
-        new LogActions(driver, timeOut).sendKeys(keys, keyName, locator);
+    public void submit() {
+        new LogActions(driver, timeOut).submit(locator);
     }
 
     public String getText() {

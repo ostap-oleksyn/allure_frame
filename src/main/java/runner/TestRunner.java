@@ -13,7 +13,7 @@ import utils.WaitUtil;
 public class TestRunner {
 
     private WebDriver driver;
-
+    //TODO - make protected?
     public WebDriver getDriver() {
         return driver;
     }

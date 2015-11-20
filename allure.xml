@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Allure suite">
+<suite name="Framework suite">
 
 
-    <test name="Google test">
+    <test name="Famework Test">
         <classes>
-            <class name="tests.GoogleTest" />
+            <class name="tests.FrameworkTest" />
         </classes>
     </test>
 

@@ -1,6 +1,5 @@
 package action;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ui.ILocator;
@@ -10,8 +9,8 @@ import java.util.List;
 
 public final class Action {
 
-    private final WebDriver driver;
-    final private ILocator locator;
+    private WebDriver driver;
+    private ILocator locator;
     private ILocator clickLocator;
     private int timeOut;
     private String position;
@@ -47,22 +46,21 @@ public final class Action {
     }
 
     public void mouseOverAndClick() {
-        if (clickLocator == null){
+        if (clickLocator == null) {
             throw new IllegalArgumentException("Only one locator was passed to Action() method");
         }
         new ActionImpl(new LocatorImpl(locator, position), this.driver, new LocatorImpl(clickLocator, null), timeOut).mouseOverAndClick();
     }
 
     public void type(final String text) {
-        new ActionImpl(new LocatorImpl(locator, position),driver, timeOut).type(text);
-    }
-    //TODO - Refactor ti use miltiple keys?
-    public void sendKeys(Keys keys){
-        final String keyName = keys.name();
-        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).sendKeys(keys, keyName);
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).type(text);
     }
 
-    public WebElement getWebElement(){
+    public void submit() {
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).submit();
+    }
+
+    public WebElement getWebElement() {
         return new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).getWebElement();
     }
 

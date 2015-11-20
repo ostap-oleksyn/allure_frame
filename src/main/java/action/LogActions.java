@@ -13,7 +13,7 @@ import ui.LocatorImpl;
 public final class LogActions {
 
     private final WebDriver driver;
-    private int timeOut = 0;
+    private int timeOut;
 
     public LogActions(final WebDriver driver, final int timeOut) {
         this.driver = driver;
@@ -65,12 +65,12 @@ public final class LogActions {
     @Step("Set {0} attribute ''{1}'' to ''{2}''")
     public void setAttribute(final LocatorImpl locator, final String attribute, final String value) {
         final WebElement element = getElement(locator);
-        ((JavascriptExecutor)driver).executeScript(String.format("arguments[0].setAttribute('%s', '%s')", attribute, value), element);
+        ((JavascriptExecutor) driver).executeScript(String.format("arguments[0].setAttribute('%s', '%s')", attribute, value), element);
     }
 
-    @Step("Sent keys ''{1}'' to ''{2}''")
-    public void sendKeys(Keys keys, String keyName, LocatorImpl locator){
-        getElement(locator).sendKeys(keys);
+    @Step("Pressed ENTER on {0}")
+    public void submit(final LocatorImpl locator) {
+        getElement(locator).sendKeys(Keys.ENTER);
     }
 
     @Step("Typed ''{0}'' into {1}")
@@ -125,14 +125,17 @@ public final class LogActions {
     public void switchToFrame(final int frameIndex) {
         driver.switchTo().frame(frameIndex);
     }
+
     @Step("Switched to frame {0}")
     public void switchToFrame(final String frameName) {
         driver.switchTo().frame(frameName);
     }
+
     @Step("Switched to frame {0}")
     public void switchToFrame(final WebElement element) {
         driver.switchTo().frame(element);
     }
+
     @Step("Switched to parent frame")
     public void switchToParentFrame() {
         driver.switchTo().parentFrame();
@@ -147,10 +150,12 @@ public final class LogActions {
         final String alertText = driver.switchTo().alert().getText();
         dismissAlert(alertText);
     }
+
     @Step("Accepted alert: {0}")
-    private void acceptAlert(String alertText) {
+    private void acceptAlert(final String alertText) {
         driver.switchTo().alert().accept();
     }
+
     @Step("Dismissed alert: {0}")
     private void dismissAlert(final String alertText) {
         driver.switchTo().alert().dismiss();

@@ -10,7 +10,10 @@ import static org.assertj.core.api.Assertions.*;
 public class Tst {
 
     public static void main(String[] args) {
-        System.out.println(Keys.ENTER.name());
 
+    }
+
+    static void sendKeys(CharSequence sequence){
+        System.out.println();
     }
 }

@@ -25,7 +25,7 @@ public class HomePage extends BasePage {
     @Step("Search for {0}")
     public ResultPage doSearchFor(final String term){
         Action(Rozetka.SEARCH_FIELD).type(term);
-        Action(Rozetka.SEARCH_FIELD).sendKeys(Keys.ENTER);
+        Action(Rozetka.SEARCH_FIELD).submit();
         return new ResultPage(driver);
     }
 }
