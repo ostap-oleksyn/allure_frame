@@ -47,8 +47,7 @@ public final class ActionImpl {
     }
 
     public WebElement getWebElement() {
-        return
-                getElement(locator);
+        return getElement(locator);
     }
 
     public List<WebElement> getList() {

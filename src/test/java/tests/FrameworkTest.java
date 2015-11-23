@@ -3,14 +3,17 @@ package tests;
 import listeners.TestListener;
 import locators.Google;
 import locators.Rozetka;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
+import static org.assertj.core.api.Assertions.*;
+
 import pageobjects.rozetka.HomePage;
 import pageobjects.rozetka.ResultPage;
 import ru.yandex.qatools.allure.annotations.Severity;
 import ru.yandex.qatools.allure.model.SeverityLevel;
 import runner.TestRunner;
+import utils.Generate;
 import utils.LogUtil;
 import utils.TestUtil;
 
@@ -60,18 +63,46 @@ public class FrameworkTest extends TestRunner {
 
         homePage.login();
 
-        WaitUntil(Rozetka.PERSONAL_LINK).hasText("Остап Олексин");
+        WaitUntil(Rozetka.PERSONAL_LINK).containsText("Остап Олексин");
 
         String searchTerm = "gtx 960";
         ResultPage resultPage = homePage.doSearchFor(searchTerm);
 
-        int numberOfResults = Action(Rozetka.RESULT_LINK).getCount();
+        final int numberOfResults = Action(Rozetka.RESULT_LINK).getCount();
 
-        for (int i = 1; i <= numberOfResults; i++){
-            String result = Action(Rozetka.RESULT_LINK).at(i).getText();
-            LogUtil.log(result);
-            Assert.assertTrue(result.toLowerCase().contains(searchTerm));
-        }
+        LogUtil.log("Total results: " + numberOfResults);
 
+        int randomProduct = Generate.integer(1, 5);
+        String firstProduct = Action(Rozetka.RESULT_LINK).at(randomProduct).getText();
+        int firstProductPrice = Action(Rozetka.PRODUCT_PRICE).at(randomProduct).getNumber();
+        LogUtil.log(firstProduct);
+        LogUtil.log(String.valueOf(firstProductPrice));
+
+        resultPage.addProductToCart(randomProduct).closeCart();
+
+        randomProduct = Generate.integer(6, 17);
+        String secondProduct = Action(Rozetka.RESULT_LINK).at(randomProduct).getText();
+        int secondProductPrice = Action(Rozetka.PRODUCT_PRICE).at(randomProduct).getNumber();
+        LogUtil.log(secondProduct);
+        LogUtil.log(String.valueOf(secondProductPrice));
+
+        resultPage.addProductToCart(randomProduct - 1);
+
+        int totalPrice = Action(Rozetka.CART_TOTAL_COST).getNumber();
+
+        assertThat(totalPrice).isEqualTo(firstProductPrice + secondProductPrice);
+
+        resultPage.removeProduct();
+        WaitUntil(Rozetka.PROCESS_BLOCK).isInvisible();
+        resultPage.removeProduct();
+        WaitUntil(Rozetka.EMPTY_CART_BLOCK).isVisible();
+        resultPage.closeCart();
+        WaitUntil(Rozetka.CART).isInvisible();
+
+        resultPage.logOut();
+
+        WaitUntil(Rozetka.PERSONAL_LINK).notContainsText("Остап Олексин");
+
+        Page().takeScreenshot();
     }
 }
