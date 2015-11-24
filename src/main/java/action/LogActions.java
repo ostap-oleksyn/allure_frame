@@ -34,7 +34,7 @@ public final class LogActions {
 
         return new WebDriverWait(driver, waitTime)
                 .ignoring(NoSuchElementException.class)
-                .withMessage("Element " + locator + " was not found after " + waitTime + " second timeout")
+                .withMessage("Element " + locator + " was not found after " + waitTime + " seconds timeout")
                 .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
     }
 
@@ -141,23 +141,14 @@ public final class LogActions {
         driver.switchTo().parentFrame();
     }
 
-    public void acceptAlert() {
-        final String alertText = driver.switchTo().alert().getText();
-        acceptAlert(alertText);
-    }
-
-    public void dismissAlert() {
-        final String alertText = driver.switchTo().alert().getText();
-        dismissAlert(alertText);
-    }
 
     @Step("Accepted alert: {0}")
-    private void acceptAlert(final String alertText) {
+    public void acceptAlert(final String alertText) {
         driver.switchTo().alert().accept();
     }
 
     @Step("Dismissed alert: {0}")
-    private void dismissAlert(final String alertText) {
+    public void dismissAlert(final String alertText) {
         driver.switchTo().alert().dismiss();
     }
 

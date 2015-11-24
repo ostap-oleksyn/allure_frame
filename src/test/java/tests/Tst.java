@@ -1,19 +1,29 @@
 package tests;
 
-
-import org.assertj.core.api.SoftAssertions;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+
+
 public class Tst {
 
     public static void main(String[] args) {
+        List<String> list = new LinkedList<>();
+        list.add("joe");
+        list.add("jwel");
+        list.add("jack");
+        list.add("janny");
+
+        List<String> list1 = new LinkedList<>();
+        list.add("joe");
+        list.add("jwel");
+        list.add("jack");
+        list.add("janny");
+
+        assertThat(list).hasSameElementsAs(list1);
 
     }
 
-    static void sendKeys(CharSequence sequence){
-        System.out.println();
-    }
+
 }

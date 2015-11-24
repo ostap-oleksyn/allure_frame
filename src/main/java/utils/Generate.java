@@ -26,7 +26,7 @@ public final class Generate {
 
     public static int integer(final int min, final int max) {
         final Random random = new Random();
-        return random.nextInt(max) + min;
+        return random.nextInt((max - min) + 1) + min;
     }
 
     public static String loremIpsum(final int numberOfWords) {

@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import ui.ILocator;
 import utils.WaitUtil;
 
+
 public class TestRunner {
 
     private WebDriver driver;
@@ -32,6 +33,10 @@ public class TestRunner {
 
     protected WaitUtil WaitUntil(ILocator locator) {
         return new WaitUtil(driver, locator);
+    }
+
+    protected WaitUtil WaitUntil() {
+        return new WaitUtil(driver);
     }
 
     @BeforeClass

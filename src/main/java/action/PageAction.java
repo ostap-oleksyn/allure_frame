@@ -43,11 +43,13 @@ public final class PageAction {
     }
 
     public void acceptAlert() {
-        new LogActions(driver).acceptAlert();
+        final String alertText = driver.switchTo().alert().getText();
+        new LogActions(driver).acceptAlert(alertText);
     }
 
     public void dismissAlert() {
-        new LogActions(driver).dismissAlert();
+        final String alertText = driver.switchTo().alert().getText();
+        new LogActions(driver).dismissAlert(alertText);
     }
 
     public String getAlertText() {

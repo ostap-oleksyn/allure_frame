@@ -2,7 +2,9 @@ package utils;
 
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,7 +14,7 @@ import ui.LocatorImpl;
 public final class WaitUtil {
 
     final private WebDriver driver;
-    final private ILocator locator;
+    private ILocator locator;
     private String position;
     private int timeOut = 30;
 
@@ -21,17 +23,31 @@ public final class WaitUtil {
         this.locator = locator;
     }
 
+    public WaitUtil(final WebDriver driver) {
+        this.driver = driver;
+    }
+
     public WaitUtil at(final int position) {
+        verify();
         this.position = String.valueOf(position);
         return this;
     }
 
     public WaitUtil at(final String position) {
+        verify();
         this.position = position;
         return this;
     }
-//TODO - use ActionImpl getWebelement()?
+
+    private void verify() {
+        if (this.locator == null) {
+            throw new IllegalArgumentException("No locator was passed to the WaitUntil() method");
+        }
+    }
+
+    //TODO - use ActionImpl getWebelement()?
     public void isVisible(final int... time) {
+        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -40,7 +56,8 @@ public final class WaitUtil {
                 .until(ExpectedConditions.visibilityOfElementLocated(new LocatorImpl(locator, position).get()));
     }
 
-    public void isInvisible(final int... time) {
+    public void notVisible(final int... time) {
+        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -50,6 +67,7 @@ public final class WaitUtil {
     }
 
     public void isPresent(final int... time) {
+        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -59,6 +77,7 @@ public final class WaitUtil {
     }
 
     public void isClickable(final int... time) {
+        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -68,6 +87,7 @@ public final class WaitUtil {
     }
 
     public void containsText(final String text, final int... time) {
+        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -77,6 +97,7 @@ public final class WaitUtil {
     }
 
     public void notContainsText(final String text, final int... time) {
+        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -84,4 +105,15 @@ public final class WaitUtil {
                 .withMessage(String.format("Text '%s' is still present in %s after %s seconds", text, new LocatorImpl(locator, position), timeOut))
                 .until((ExpectedCondition<Boolean>) webDriver -> !driver.findElement(new LocatorImpl(locator, position).get()).getText().contains(text));
     }
+
+    public void textIsPresent(final String text, final int... time) {
+        if (time.length > 0) {
+            timeOut = time[0];
+        }
+        new WebDriverWait(driver, timeOut)
+                .withMessage(String.format("Text '%s' is not present on the page after %s seconds", text, timeOut))
+                .until((ExpectedCondition<WebElement>) webDriver -> driver.findElement(By.xpath(".//*[contains(text(),'" + text + "')]")));
+    }
+
+
 }

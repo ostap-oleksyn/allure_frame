@@ -42,7 +42,7 @@ public final class ActionImpl {
 
         return new WebDriverWait(driver, waitTime)
                 .ignoring(NoSuchElementException.class)
-                .withMessage("Element " + locator + " was not visible after " + waitTime + " second timeout")
+                .withMessage("Element " + locator + " was not visible after " + waitTime + " seconds timeout")
                 .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
     }
 

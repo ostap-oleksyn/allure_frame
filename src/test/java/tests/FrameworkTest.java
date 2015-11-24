@@ -59,8 +59,8 @@ public class FrameworkTest extends TestRunner {
     @Severity(SeverityLevel.CRITICAL)
     public void rozetkaTest() {
         Page().navigateTo("https://rozetka.com.ua");
-        HomePage homePage = new HomePage(getDriver());
 
+        HomePage homePage = new HomePage(getDriver());
         homePage.login();
 
         WaitUntil(Rozetka.PERSONAL_LINK).containsText("Остап Олексин");
@@ -73,6 +73,7 @@ public class FrameworkTest extends TestRunner {
         LogUtil.log("Total results: " + numberOfResults);
 
         int randomProduct = Generate.integer(1, 5);
+        LogUtil.log("" + randomProduct);
         String firstProduct = Action(Rozetka.RESULT_LINK).at(randomProduct).getText();
         int firstProductPrice = Action(Rozetka.PRODUCT_PRICE).at(randomProduct).getNumber();
         LogUtil.log(firstProduct);
@@ -81,6 +82,7 @@ public class FrameworkTest extends TestRunner {
         resultPage.addProductToCart(randomProduct).closeCart();
 
         randomProduct = Generate.integer(6, 17);
+        LogUtil.log("" + (randomProduct - 1));
         String secondProduct = Action(Rozetka.RESULT_LINK).at(randomProduct).getText();
         int secondProductPrice = Action(Rozetka.PRODUCT_PRICE).at(randomProduct).getNumber();
         LogUtil.log(secondProduct);
@@ -90,14 +92,16 @@ public class FrameworkTest extends TestRunner {
 
         int totalPrice = Action(Rozetka.CART_TOTAL_COST).getNumber();
 
-        assertThat(totalPrice).isEqualTo(firstProductPrice + secondProductPrice);
+        assertThat(totalPrice)
+                .as("Total price in cart doesn't match")
+                .isEqualTo(firstProductPrice + secondProductPrice);
 
         resultPage.removeProduct();
-        WaitUntil(Rozetka.PROCESS_BLOCK).isInvisible();
+        WaitUntil(Rozetka.PROCESS_BLOCK).notVisible();
         resultPage.removeProduct();
-        WaitUntil(Rozetka.EMPTY_CART_BLOCK).isVisible();
+        WaitUntil().textIsPresent("Корзина пуста");
         resultPage.closeCart();
-        WaitUntil(Rozetka.CART).isInvisible();
+        WaitUntil(Rozetka.CART).notVisible();
 
         resultPage.logOut();
 
