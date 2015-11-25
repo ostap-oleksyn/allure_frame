@@ -1,5 +1,7 @@
 package tests;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,19 +12,25 @@ public class Tst {
 
     public static void main(String[] args) {
         List<String> list = new LinkedList<>();
-        list.add("joe");
-        list.add("jwel");
-        list.add("jack");
-        list.add("janny");
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        list.add("d");
 
         List<String> list1 = new LinkedList<>();
-        list.add("joe");
-        list.add("jwel");
-        list.add("jack");
-        list.add("janny");
+        list1.add("jack");
+        list1.add("jwel");
+        list1.add("joe");
+        list1.add("janny");
 
-        assertThat(list).hasSameElementsAs(list1);
+        Comparator<String> comparator = (o1, o2) -> 0;
 
+        Collections.sort(list, comparator);
+
+        list.forEach(System.out::println);
+
+        assertThat(list).isSortedAccordingTo(comparator);
+        fail("test");
     }
 
 

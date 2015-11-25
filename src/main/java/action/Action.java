@@ -112,7 +112,7 @@ public final class Action {
         new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).deselectByIndex(index);
     }
 
-    public List<WebElement> getList(final ILocator locator) {
+    public List<WebElement> getList() {
         return new ActionImpl(new LocatorImpl(locator, position), this.driver, timeOut).getList();
     }
 }

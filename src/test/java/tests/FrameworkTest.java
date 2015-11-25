@@ -3,6 +3,7 @@ package tests;
 import listeners.TestListener;
 import locators.Google;
 import locators.Rozetka;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -55,7 +56,7 @@ public class FrameworkTest extends TestRunner {
 
     }
 
-    @Test()
+    @Test(enabled = false)
     @Severity(SeverityLevel.CRITICAL)
     public void rozetkaTest() {
         Page().navigateTo("https://rozetka.com.ua");
@@ -75,7 +76,7 @@ public class FrameworkTest extends TestRunner {
         int randomProduct = Generate.integer(1, 5);
         LogUtil.log("" + randomProduct);
         String firstProduct = Action(Rozetka.RESULT_LINK).at(randomProduct).getText();
-        int firstProductPrice = Action(Rozetka.PRODUCT_PRICE).at(randomProduct).getNumber();
+        int firstProductPrice = Action(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
         LogUtil.log(firstProduct);
         LogUtil.log(String.valueOf(firstProductPrice));
 
@@ -84,7 +85,7 @@ public class FrameworkTest extends TestRunner {
         randomProduct = Generate.integer(6, 17);
         LogUtil.log("" + (randomProduct - 1));
         String secondProduct = Action(Rozetka.RESULT_LINK).at(randomProduct).getText();
-        int secondProductPrice = Action(Rozetka.PRODUCT_PRICE).at(randomProduct).getNumber();
+        int secondProductPrice = Action(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
         LogUtil.log(secondProduct);
         LogUtil.log(String.valueOf(secondProductPrice));
 
@@ -108,5 +109,58 @@ public class FrameworkTest extends TestRunner {
         WaitUntil(Rozetka.PERSONAL_LINK).notContainsText("Остап Олексин");
 
         Page().takeScreenshot();
+    }
+
+    @Test(dataProvider = "manufacturer")
+    @Severity(SeverityLevel.NORMAL)
+    public void rozetkaPriceFilterTest(final String manufacturer) {
+        int maxRange = 3000;
+
+        Page().navigateTo("https://rozetka.com.ua");
+
+        Action(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
+        Action(Rozetka.MANUFECTURER).at(manufacturer).click();
+
+        assertThat(Action(Rozetka.ACTIVE_FILTER).at(manufacturer).isDisplayed())
+                .as("Manufacturer filter is displayed");
+
+        int filteredProductsCount = Action(Rozetka.PRODUCT_NAME).getCount();
+
+        for (int index = 1; index <= filteredProductsCount; index++) {
+            String productName = Action(Rozetka.PRODUCT_NAME).at(index).getText();
+
+            assertThat(productName)
+                    .as("Filtered products contain manufacturer name")
+                    .contains(manufacturer);
+        }
+
+        Action(Rozetka.MAX_PRICE_FILTER).type(String.valueOf(maxRange));
+        Action(Rozetka.MAX_PRICE_FILTER).submit();
+
+        assertThat(Action(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
+                .as("Price filter is displayed");
+
+        filteredProductsCount = Action(Rozetka.PRODUCT_NAME).getCount();
+
+        for (int index = 1; index <= filteredProductsCount; index++) {
+            int productPrice = Action(Rozetka.PRODUCT_PRICE).at(index).getNumber();
+
+            assertThat(productPrice)
+                    .as("Product price filter is applied")
+                    .isBetween(1, maxRange);
+        }
+
+        Page().takeScreenshot();
+
+        Action(Rozetka.ACTIVE_FILTER).at(manufacturer).click();
+        Action(Rozetka.ACTIVE_FILTER).at(String.valueOf(maxRange)).click();
+
+        Page().takeScreenshot();
+
+    }
+
+    @DataProvider(name = "manufacturer")
+    private Object[][] data(){
+        return new Object[][]{{"Texet"},{"PocketBook"}};
     }
 }

@@ -97,7 +97,7 @@ public final class ActionImpl {
     public int getNumber() {
         final String text = getElement(locator).getText().replaceAll("\\D", "");
         if (text.length() == 0) {
-            throw new IllegalStateException("Element has no numbers in it.");
+            throw new IllegalStateException("Element's text doesn't contain any numbers.");
         }
         return Integer.parseInt(text);
     }
