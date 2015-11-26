@@ -3,9 +3,7 @@ package tests;
 import listeners.TestListener;
 import locators.Google;
 import locators.Rozetka;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -21,7 +19,7 @@ import utils.TestUtil;
 
 @Listeners(TestListener.class)
 public class FrameworkTest extends TestRunner {
-    @Test(enabled = false)
+    @org.testng.annotations.Test(enabled = false)
     @Severity(SeverityLevel.MINOR)
     public void googleTest() {
         Page().navigateTo("https://google.com");
@@ -56,7 +54,7 @@ public class FrameworkTest extends TestRunner {
 
     }
 
-    @Test(enabled = false)
+    @org.testng.annotations.Test(enabled = false)
     @Severity(SeverityLevel.CRITICAL)
     public void rozetkaTest() {
         Page().navigateTo("https://rozetka.com.ua");
@@ -111,7 +109,7 @@ public class FrameworkTest extends TestRunner {
         Page().takeScreenshot();
     }
 
-    @Test
+    @org.testng.annotations.Test
     @Severity(SeverityLevel.NORMAL)
     public void rozetkaPriceFilterTest() {
         int maxRange = 3000;
@@ -126,7 +124,6 @@ public class FrameworkTest extends TestRunner {
         assertThat(Action(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
                 .as("Manufacturer filter is displayed");
 
-        Action(Rozetka.PRODUCT_NAME).at(17).executeScript("arguments[0].scrollIntoView(true);");
 
         int filteredProductsCount = Action(Rozetka.PRODUCT_NAME).getCount();
 

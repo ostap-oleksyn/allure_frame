@@ -1,4 +1,4 @@
-package action;
+package actions;
 
 
 import org.openqa.selenium.*;

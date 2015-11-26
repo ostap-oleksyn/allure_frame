@@ -1,4 +1,4 @@
-package action;
+package actions;
 
 
 import org.openqa.selenium.WebDriver;
@@ -34,7 +34,7 @@ public final class PageAction {
     }
 
     public void switchToFrame(final ILocator locator) {
-        final WebElement element = new Action(driver, locator).getWebElement();
+        final WebElement element = new ElementAction(driver, locator).getWebElement();
         new PageActionImpl(driver).switchToFrame(element);
     }
 

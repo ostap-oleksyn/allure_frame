@@ -45,7 +45,6 @@ public final class WaitUtil {
         }
     }
 
-    //TODO - use ActionImpl getWebelement()?
     public void isVisible(final int... time) {
         verify();
         if (time.length > 0) {
