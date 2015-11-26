@@ -7,6 +7,7 @@ import org.testng.annotations.Listeners;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.testng.annotations.Test;
 import pageobjects.rozetka.HomePage;
 import pageobjects.rozetka.ResultPage;
 import ru.yandex.qatools.allure.annotations.Severity;
@@ -19,7 +20,7 @@ import utils.TestUtil;
 
 @Listeners(TestListener.class)
 public class FrameworkTest extends TestRunner {
-    @org.testng.annotations.Test(enabled = false)
+    @Test(enabled = false)
     @Severity(SeverityLevel.MINOR)
     public void googleTest() {
         Page().navigateTo("https://google.com");
@@ -54,7 +55,7 @@ public class FrameworkTest extends TestRunner {
 
     }
 
-    @org.testng.annotations.Test(enabled = false)
+    @Test(enabled = false)
     @Severity(SeverityLevel.CRITICAL)
     public void rozetkaTest() {
         Page().navigateTo("https://rozetka.com.ua");
@@ -109,7 +110,7 @@ public class FrameworkTest extends TestRunner {
         Page().takeScreenshot();
     }
 
-    @org.testng.annotations.Test
+    @Test
     @Severity(SeverityLevel.NORMAL)
     public void rozetkaPriceFilterTest() {
         int maxRange = 3000;
