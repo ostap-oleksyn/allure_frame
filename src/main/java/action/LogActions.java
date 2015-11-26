@@ -6,7 +6,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.yandex.qatools.allure.annotations.Attachment;
 import ru.yandex.qatools.allure.annotations.Step;
 import ui.LocatorImpl;
 
@@ -18,10 +17,6 @@ public final class LogActions {
     public LogActions(final WebDriver driver, final int timeOut) {
         this.driver = driver;
         this.timeOut = timeOut;
-    }
-
-    public LogActions(final WebDriver driver) {
-        this.driver = driver;
     }
 
     private WebElement getElement(final LocatorImpl locator) {
@@ -38,16 +33,6 @@ public final class LogActions {
                 .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
     }
 
-    @Step("----------------------SCREENSHOT----------------------")
-    @Attachment(value = "Screenshot.png", type = "image/png")
-    public byte[] takeScreenshot() {
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-    }
-
-    @Step("Navigated to {0}")
-    public void navigate(final String url) {
-        driver.get(url);
-    }
 
     @Step("Clicked {0}")
     public void click(final LocatorImpl locator) {
@@ -119,41 +104,6 @@ public final class LogActions {
     public void deselectByValue(final LocatorImpl locator, final String value) {
         final Select select = new Select(getElement(locator));
         select.deselectByValue(value);
-    }
-
-    @Step("Switched to frame {0}")
-    public void switchToFrame(final int frameIndex) {
-        driver.switchTo().frame(frameIndex);
-    }
-
-    @Step("Switched to frame {0}")
-    public void switchToFrame(final String frameName) {
-        driver.switchTo().frame(frameName);
-    }
-
-    @Step("Switched to frame {0}")
-    public void switchToFrame(final WebElement element) {
-        driver.switchTo().frame(element);
-    }
-
-    @Step("Switched to parent frame")
-    public void switchToParentFrame() {
-        driver.switchTo().parentFrame();
-    }
-
-    @Step("Accepted alert: {0}")
-    public void acceptAlert(final String alertText) {
-        driver.switchTo().alert().accept();
-    }
-
-    @Step("Dismissed alert: {0}")
-    public void dismissAlert(final String alertText) {
-        driver.switchTo().alert().dismiss();
-    }
-
-    @Step("Executed JavaScript: ''{0}''")
-    public void executeScript(final String javaScript) {
-        ((JavascriptExecutor) driver).executeScript(javaScript);
     }
 
     @Step("Executed JavaScript: ''{0}'' on {1}")

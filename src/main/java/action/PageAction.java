@@ -14,7 +14,7 @@ public final class PageAction {
     }
 
     public void navigateTo(final String url) {
-        new LogActions(this.driver).navigate(url);
+        new PageActionImpl(this.driver).navigate(url);
     }
 
     public String getTitle() {
@@ -26,30 +26,30 @@ public final class PageAction {
     }
 
     public void switchToFrame(final int frameIndex) {
-        new LogActions(driver).switchToFrame(frameIndex);
+        new PageActionImpl(driver).switchToFrame(frameIndex);
     }
 
     public void switchToFrame(final String frameName) {
-        new LogActions(driver).switchToFrame(frameName);
+        new PageActionImpl(driver).switchToFrame(frameName);
     }
 
     public void switchToFrame(final ILocator locator) {
         final WebElement element = new Action(driver, locator).getWebElement();
-        new LogActions(driver).switchToFrame(element);
+        new PageActionImpl(driver).switchToFrame(element);
     }
 
     public void switchToParentFrame() {
-        new LogActions(driver).switchToParentFrame();
+        new PageActionImpl(driver).switchToParentFrame();
     }
 
     public void acceptAlert() {
         final String alertText = driver.switchTo().alert().getText();
-        new LogActions(driver).acceptAlert(alertText);
+        new PageActionImpl(driver).acceptAlert(alertText);
     }
 
     public void dismissAlert() {
         final String alertText = driver.switchTo().alert().getText();
-        new LogActions(driver).dismissAlert(alertText);
+        new PageActionImpl(driver).dismissAlert(alertText);
     }
 
     public String getAlertText() {
@@ -57,10 +57,10 @@ public final class PageAction {
     }
 
     public void executeScript(final String javaScript) {
-        new LogActions(driver).executeScript(javaScript);
+        new PageActionImpl(driver).executeScript(javaScript);
     }
 
     public void takeScreenshot() {
-        new LogActions(this.driver).takeScreenshot();
+        new PageActionImpl(this.driver).takeScreenshot();
     }
 }
