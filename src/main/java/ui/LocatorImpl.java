@@ -4,7 +4,7 @@ package ui;
 import org.openqa.selenium.By;
 
 
-public class LocatorImpl {
+public final class LocatorImpl {
 
     final private ILocator locator;
     final private LocatorType locatorType;

@@ -3,7 +3,7 @@ package utils;
 
 import java.util.Date;
 
-public class TimerImpl {
+public final class TimerImpl {
 
     private static Date t1;
     private static Date t2;

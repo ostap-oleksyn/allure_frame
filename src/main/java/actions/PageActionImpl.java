@@ -5,7 +5,7 @@ import org.openqa.selenium.*;
 import ru.yandex.qatools.allure.annotations.Attachment;
 import ru.yandex.qatools.allure.annotations.Step;
 
-public class PageActionImpl {
+public final class PageActionImpl {
 
     private final WebDriver driver;
 
