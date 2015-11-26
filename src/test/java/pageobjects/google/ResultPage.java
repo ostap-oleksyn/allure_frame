@@ -1,4 +1,4 @@
-package pageobjects;
+package pageobjects.google;
 
 
 import locators.Google;
@@ -10,13 +10,10 @@ public class ResultPage extends BasePage {
         super(driver);
     }
 
-   
-    public void clickSearchButton(){
-       action.get(Google.SEARCH_BUTTON).click();
-    }
 
 
+    @Step("Click images tab")
     public void clickImageTab(){
-       action.get(Google.IMAGES_TAB).click();
+       action(Google.IMAGES_TAB).click();
     }
 }

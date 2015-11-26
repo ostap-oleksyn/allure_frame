@@ -1,10 +1,12 @@
 package ui;
 
 
-import org.openqa.selenium.By;
+public interface ILocator {
 
-public interface ILocator<T extends ILocator> {
-    By get();
+    LocatorType getLocatorType();
 
-    T at(int position);
+    String getRawLocator();
+
+    String getName();
+
 }

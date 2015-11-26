@@ -8,7 +8,7 @@ public final class Generate {
     private Generate() {
     }
 
-    public static String text(final int length) {
+    public static String string(final int length) {
         final String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         final Random rnd = new Random();
 
@@ -22,6 +22,11 @@ public final class Generate {
     public static int integer(final int max) {
         final Random random = new Random();
         return random.nextInt(max) + 1;
+    }
+
+    public static int integer(final int min, final int max) {
+        final Random random = new Random();
+        return random.nextInt((max - min) + 1) + min;
     }
 
     public static String loremIpsum(final int numberOfWords) {

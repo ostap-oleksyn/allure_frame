@@ -1,7 +1,6 @@
 package locators;
 
 
-import org.openqa.selenium.By;
 import ui.ILocator;
 import ui.LocatorType;
 
@@ -28,18 +27,16 @@ public enum Google implements ILocator {
     ACCOUNT_MENU("Account Menu",
             LocatorType.BY_XPATH,
             ".//*[@id='nav-link-yourAccount']"),
-    START_HERE("Start Here",
+    AMAZON_CLICK("Amazon click",
             LocatorType.BY_XPATH,
-            ".//*[@id='nav-flyout-ya-newCust']/a"),
-    NAV_MENU("NAV_MENU",
-            LocatorType.BY_ID,
-            "nav-flyout-yourAccount");
+            ".//*[@id='nav-flyout-shopAll']/div[2]/a/span"),
+    AMAZON_OVER("Amazon over",
+            LocatorType.BY_XPATH,
+            ".//*[@id='nav-link-shopall']/span[2]");
 
     private String name;
     private LocatorType locatorType;
     private String rawLocator;
-    private String modifiedLocator;
-    private int position;
 
     Google(final String name, final LocatorType locatorType, final String rawLocator) {
         this.name = name;
@@ -47,34 +44,16 @@ public enum Google implements ILocator {
         this.rawLocator = rawLocator;
     }
 
-    public Google at(final int position) {
-        this.position = position;
-        this.modifiedLocator = String.format(this.rawLocator, position);
-        return this;
+    public String getName() {
+        return name;
     }
 
-    public By get() {
-        By locator;
-        if (this.modifiedLocator == null) {
-            if (rawLocator.contains("%s")) {
-                rawLocator = rawLocator.replace("%s", ".");
-            }
-            locator = this.locatorType.getBy(this.rawLocator);
-        } else {
-            locator = this.locatorType.getBy(this.modifiedLocator);
-        }
-        return locator;
+    public LocatorType getLocatorType() {
+        return locatorType;
     }
 
-    @Override
-    public String toString() {
-        String logMessage;
-        if (modifiedLocator == null) {
-            logMessage = String.format("[%s > %s]", this.getClass().getSimpleName(), this.name);
-        } else {
-            logMessage = String.format("[%s > %s] at position [%s]", this.getClass().getSimpleName(), this.name, this.position);
-        }
-        return logMessage;
+    public String getRawLocator() {
+        return rawLocator;
     }
 
 }

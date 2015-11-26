@@ -1,4 +1,4 @@
-package pageobjects;
+package pageobjects.google;
 
 
 import locators.Google;
@@ -11,9 +11,10 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-
+    @Step("Search for {0}")
     public ResultPage doSearchFor(String term) {
-        action.get(Google.SEARCH_FIELD).type(term);
+        action(Google.SEARCH_FIELD).type(term);
+        action(Google.SEARCH_BUTTON).click();
         return new ResultPage(driver);
     }
 

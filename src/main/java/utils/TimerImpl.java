@@ -7,13 +7,13 @@ public class TimerImpl {
 
     private static Date t1;
     private static Date t2;
-    public static boolean running = false;
-    public static int timerDuration = 0;
+    public static boolean running;
+    public static int timerDuration;
 
     public TimerImpl() {
     }
 
-    public TimerImpl(boolean start, int timerDuration) {
+    public TimerImpl(final boolean start, final int timerDuration) {
         if (start) {
             this.start(timerDuration);
 
@@ -21,7 +21,7 @@ public class TimerImpl {
 
     }
 
-    public void start(int timerDuration) {
+    public void start(final int timerDuration) {
         t1 = new Date();
         running = true;
         TimerImpl.timerDuration = timerDuration;
@@ -59,14 +59,14 @@ public class TimerImpl {
     }
 
     public static String getElapsedFormatHHMMSS() {
-        long milliseconds = getElapsedMilliseconds();
-        int hours = (int) (milliseconds / 1000L / 60L / 60L);
-        int minutes = (int) (milliseconds / 1000L / 60L % 60L);
-        int seconds = (int) (milliseconds / 1000L % 60L);
+        final long milliseconds = getElapsedMilliseconds();
+        final int hours = (int) (milliseconds / 1000L / 60L / 60L);
+        final int minutes = (int) (milliseconds / 1000L / 60L % 60L);
+        final int seconds = (int) (milliseconds / 1000L % 60L);
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
-    public static void sleep(long milliseconds) {
+    public static void sleep(final long milliseconds) {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException var3) {
@@ -75,18 +75,18 @@ public class TimerImpl {
 
     }
 
-    public static String getFormatHHMMSS(Date date) {
-        long milliseconds = new Date().getTime() - date.getTime();
-        int hours = (int) (milliseconds / 1000L / 60L / 60L);
-        int minutes = (int) (milliseconds / 1000L / 60L % 60L);
-        int seconds = (int) (milliseconds / 1000L % 60L);
+    public static String getFormatHHMMSS(final Date date) {
+        final long milliseconds = new Date().getTime() - date.getTime();
+        final int hours = (int) (milliseconds / 1000L / 60L / 60L);
+        final int minutes = (int) (milliseconds / 1000L / 60L % 60L);
+        final int seconds = (int) (milliseconds / 1000L % 60L);
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
-    public static String getFormatHHMMSS(int seconds) {
-        int hr = seconds / 60 / 60;
-        int min = seconds / 60 % 60;
-        int sec = seconds % 60;
+    public static String getFormatHHMMSS(final int seconds) {
+        final int hr = seconds / 60 / 60;
+        final int min = seconds / 60 % 60;
+        final int sec = seconds % 60;
         return String.format("%02d:%02d:%02d", hr, min, sec);
     }
 }
