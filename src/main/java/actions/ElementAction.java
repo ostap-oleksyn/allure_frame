@@ -93,30 +93,6 @@ public final class ElementAction {
         new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).executeScript(javaScript);
     }
 
-    public void selectByText(final String text) {
-        new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByText(text);
-    }
-
-    public void selectByValue(final String value) {
-        new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByValue(value);
-    }
-
-    public void selectByIndex(final int index) {
-        new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByIndex(index);
-    }
-
-    public void deselectByText(final String text) {
-        new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).deselectByText(text);
-    }
-
-    public void deselectByValue(final String value) {
-        new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).deselectByValue(value);
-    }
-
-    public void deselectByIndex(final int index) {
-        new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).deselectByIndex(index);
-    }
-
     public List<WebElement> getList() {
         return new ElementActionImpl(new LocatorImpl(locator, position), this.driver, timeOut).getList();
     }

@@ -141,42 +141,6 @@ public final class ElementActionImpl {
         getElement(locator).sendKeys(text);
     }
 
-    @Step("Selected {0} with text {}")
-    public void selectByText(final String text) {
-        final Select select = new Select(getElement(locator));
-        select.selectByVisibleText(text);
-    }
-
-    @Step("Selected {0} at {}")
-    public void selectByIndex(final int index) {
-        final Select select = new Select(getElement(locator));
-        select.selectByIndex(index);
-    }
-
-    @Step("Selected {0} with value {}")
-    public void selectByValue(final String value) {
-        final Select select = new Select(getElement(locator));
-        select.selectByValue(value);
-    }
-
-    @Step("Deselected {0} with text {}")
-    public void deselectByText(final String text) {
-        final Select select = new Select(getElement(locator));
-        select.deselectByVisibleText(text);
-    }
-
-    @Step("Deselected {0} at {}")
-    public void deselectByIndex(final int index) {
-        final Select select = new Select(getElement(locator));
-        select.deselectByIndex(index);
-    }
-
-    @Step("Deselected {0} with value {}")
-    public void deselectByValue(final String value) {
-        final Select select = new Select(getElement(locator));
-        select.deselectByValue(value);
-    }
-
     @Step("Executed JavaScript: ''{0}'' on {1}")
     public void executeScript(final String javaScript) {
         ((JavascriptExecutor) driver).executeScript(javaScript, getElement(locator));
