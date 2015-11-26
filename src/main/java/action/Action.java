@@ -88,6 +88,10 @@ public final class Action {
         return new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).getNumber();
     }
 
+    public void executeScript(final String javaScript){
+        new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).executeScript(javaScript);
+    }
+
     public void selectByText(final String text) {
         new ActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByText(text);
     }

@@ -141,7 +141,6 @@ public final class LogActions {
         driver.switchTo().parentFrame();
     }
 
-
     @Step("Accepted alert: {0}")
     public void acceptAlert(final String alertText) {
         driver.switchTo().alert().accept();
@@ -150,6 +149,16 @@ public final class LogActions {
     @Step("Dismissed alert: {0}")
     public void dismissAlert(final String alertText) {
         driver.switchTo().alert().dismiss();
+    }
+
+    @Step("Executed JavaScript: ''{0}''")
+    public void executeScript(final String javaScript) {
+        ((JavascriptExecutor) driver).executeScript(javaScript);
+    }
+
+    @Step("Executed JavaScript: ''{0}'' on {1}")
+    public void executeScript(final String javaScript, LocatorImpl locator) {
+        ((JavascriptExecutor) driver).executeScript(javaScript, getElement(locator));
     }
 
 }

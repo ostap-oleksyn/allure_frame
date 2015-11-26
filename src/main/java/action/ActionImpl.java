@@ -102,6 +102,10 @@ public final class ActionImpl {
         return Integer.parseInt(text);
     }
 
+    public void executeScript(final String javaScript){
+        new LogActions(driver, timeOut).executeScript(javaScript, locator);
+    }
+
     public void mouseOverAndClick() {
         new LogActions(this.driver, timeOut).mouseOverAndClick(locator, locator1);
     }

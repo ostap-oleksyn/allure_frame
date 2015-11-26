@@ -111,18 +111,22 @@ public class FrameworkTest extends TestRunner {
         Page().takeScreenshot();
     }
 
-    @Test(dataProvider = "manufacturer")
+    @Test
     @Severity(SeverityLevel.NORMAL)
-    public void rozetkaPriceFilterTest(final String manufacturer) {
+    public void rozetkaPriceFilterTest() {
         int maxRange = 3000;
 
         Page().navigateTo("https://rozetka.com.ua");
 
-        Action(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
-        Action(Rozetka.MANUFECTURER).at(manufacturer).click();
+        Page().executeScript("scroll(0, 750)");
 
-        assertThat(Action(Rozetka.ACTIVE_FILTER).at(manufacturer).isDisplayed())
+        Action(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
+        Action(Rozetka.MANUFECTURER).at("PocketBook").click();
+
+        assertThat(Action(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
                 .as("Manufacturer filter is displayed");
+
+        Action(Rozetka.PRODUCT_NAME).at(17).executeScript("arguments[0].scrollIntoView(true);");
 
         int filteredProductsCount = Action(Rozetka.PRODUCT_NAME).getCount();
 
@@ -131,7 +135,7 @@ public class FrameworkTest extends TestRunner {
 
             assertThat(productName)
                     .as("Filtered products contain manufacturer name")
-                    .contains(manufacturer);
+                    .contains("PocketBook");
         }
 
         Action(Rozetka.MAX_PRICE_FILTER).type(String.valueOf(maxRange));
@@ -152,15 +156,12 @@ public class FrameworkTest extends TestRunner {
 
         Page().takeScreenshot();
 
-        Action(Rozetka.ACTIVE_FILTER).at(manufacturer).click();
+        Action(Rozetka.ACTIVE_FILTER).at("PocketBook").click();
         Action(Rozetka.ACTIVE_FILTER).at(String.valueOf(maxRange)).click();
 
         Page().takeScreenshot();
 
     }
 
-    @DataProvider(name = "manufacturer")
-    private Object[][] data(){
-        return new Object[][]{{"Texet"},{"PocketBook"}};
-    }
+
 }

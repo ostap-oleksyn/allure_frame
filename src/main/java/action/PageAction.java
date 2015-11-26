@@ -56,6 +56,10 @@ public final class PageAction {
         return driver.switchTo().alert().getText();
     }
 
+    public void executeScript(final String javaScript) {
+        new LogActions(driver).executeScript(javaScript);
+    }
+
     public void takeScreenshot() {
         new LogActions(this.driver).takeScreenshot();
     }
