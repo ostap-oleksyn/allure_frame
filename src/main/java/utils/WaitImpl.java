@@ -11,29 +11,29 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ui.ILocator;
 import ui.LocatorImpl;
 
-public final class WaitUtil {
+public final class WaitImpl {
 
     final private WebDriver driver;
     private ILocator locator;
     private String position;
     private int timeOut = 30;
 
-    public WaitUtil(final WebDriver driver, final ILocator locator) {
+    public WaitImpl(final WebDriver driver, final ILocator locator) {
         this.driver = driver;
         this.locator = locator;
     }
 
-    public WaitUtil(final WebDriver driver) {
+    public WaitImpl(final WebDriver driver) {
         this.driver = driver;
     }
 
-    public WaitUtil at(final int position) {
+    public WaitImpl at(final int position) {
         verify();
         this.position = String.valueOf(position);
         return this;
     }
 
-    public WaitUtil at(final String position) {
+    public WaitImpl at(final String position) {
         verify();
         this.position = position;
         return this;
@@ -45,7 +45,6 @@ public final class WaitUtil {
         }
     }
 
-    //TODO - use ActionImpl getWebelement()?
     public void isVisible(final int... time) {
         verify();
         if (time.length > 0) {
@@ -114,6 +113,5 @@ public final class WaitUtil {
                 .withMessage(String.format("Text '%s' is not present on the page after %s seconds", text, timeOut))
                 .until((ExpectedCondition<WebElement>) webDriver -> driver.findElement(By.xpath(".//*[contains(text(),'" + text + "')]")));
     }
-
 
 }

@@ -3,22 +3,18 @@ package utils;
 
 import java.util.Date;
 
-public class TimerImpl {
+public final class TimerImpl {
 
     private static Date t1;
     private static Date t2;
     public static boolean running;
     public static int timerDuration;
 
-    public TimerImpl() {
-    }
 
     public TimerImpl(final boolean start, final int timerDuration) {
         if (start) {
             this.start(timerDuration);
-
         }
-
     }
 
     public void start(final int timerDuration) {

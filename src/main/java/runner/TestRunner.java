@@ -1,46 +1,52 @@
 package runner;
 
 
-import action.Action;
-import action.PageAction;
+import actions.ElementAction;
+import actions.PageAction;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import ui.ILocator;
-import utils.WaitUtil;
+import utils.TestImpl;
+import utils.WaitImpl;
 
 
 public class TestRunner {
 
     private WebDriver driver;
-    //TODO - make protected?
+
     public WebDriver getDriver() {
         return driver;
     }
 
-    protected Action Action(ILocator locator) {
-        return new Action(driver, locator);
+    protected ElementAction Action(final ILocator locator) {
+        return new ElementAction(driver, locator);
     }
 
-    protected Action Action(ILocator overLocator, ILocator clickLocator) {
-        return new Action(driver, overLocator, clickLocator);
+    protected ElementAction Action(final ILocator overLocator, final ILocator clickLocator) {
+        return new ElementAction(driver, overLocator, clickLocator);
     }
 
     protected PageAction Page() {
         return new PageAction(driver);
     }
 
-    protected WaitUtil WaitUntil(ILocator locator) {
-        return new WaitUtil(driver, locator);
+    protected WaitImpl WaitUntil(final ILocator locator) {
+        return new WaitImpl(driver, locator);
     }
 
-    protected WaitUtil WaitUntil() {
-        return new WaitUtil(driver);
+    protected WaitImpl WaitUntil() {
+        return new WaitImpl(driver);
+    }
+
+    protected TestImpl Test(){
+        return new TestImpl(driver);
     }
 
     @BeforeClass
     public void setUp() {
+        //TODO - implement grid support
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
     }

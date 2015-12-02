@@ -3,12 +3,8 @@ package tests;
 import listeners.TestListener;
 import locators.Google;
 import locators.Rozetka;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
-import static org.assertj.core.api.Assertions.*;
-
 import pageobjects.rozetka.HomePage;
 import pageobjects.rozetka.ResultPage;
 import ru.yandex.qatools.allure.annotations.Severity;
@@ -16,7 +12,8 @@ import ru.yandex.qatools.allure.model.SeverityLevel;
 import runner.TestRunner;
 import utils.Generate;
 import utils.LogUtil;
-import utils.TestUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @Listeners(TestListener.class)
@@ -28,20 +25,18 @@ public class FrameworkTest extends TestRunner {
         Action(Google.SEARCH_FIELD).type("docker");
         Action(Google.SEARCH_BUTTON).click();
 
-
         String t0 = Action(Google.RESULT_LINK).getText();
         String t1 = Action(Google.RESULT_LINK).at(2).getText();
         String t2 = Action(Google.RESULT_LINK).getText();
         String t3 = Action(Google.RESULT_LINK).getText();
         String t4 = Action(Google.RESULT_LINK).at(10).getText();
 
-
         Action(Google.RESULT_LINK).click();
-        TestUtil.sleep(5);
+        Test().sleep(5);
         getDriver().navigate().back();
 
         Action(Google.RESULT_LINK).at(10).click();
-        TestUtil.sleep(5);
+        Test().sleep(5);
         getDriver().navigate().back();
 
         Action(Google.RESULT_LINK).click();
@@ -52,8 +47,6 @@ public class FrameworkTest extends TestRunner {
         LogUtil.log(t2);
         LogUtil.log(t3);
         LogUtil.log(t4);
-
-
     }
 
     @Test(enabled = false)
@@ -126,7 +119,6 @@ public class FrameworkTest extends TestRunner {
         assertThat(Action(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
                 .as("Manufacturer filter is displayed");
 
-        Action(Rozetka.PRODUCT_NAME).at(17).executeScript("arguments[0].scrollIntoView(true);");
 
         int filteredProductsCount = Action(Rozetka.PRODUCT_NAME).getCount();
 

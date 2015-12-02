@@ -10,13 +10,13 @@ import ru.yandex.qatools.allure.annotations.Attachment;
 import ru.yandex.qatools.allure.annotations.Step;
 import runner.TestRunner;
 
-public class TestListener extends TestListenerAdapter {
+public final class TestListener extends TestListenerAdapter {
 
     @Override
-    public void onTestFailure(final ITestResult tr) {
-        final Object currentClass = tr.getInstance();
+    public void onTestFailure(final ITestResult testResult) {
+        final Object currentClass = testResult.getInstance();
         final WebDriver driver = ((TestRunner) currentClass).getDriver();
-        takeScreenshot(tr.getMethod().getMethodName(), driver);
+        takeScreenshot(testResult.getMethod().getMethodName(), driver);
     }
 
     @Step("-------------------------------FAIL SCREENSHOT-------------------------------")

@@ -1,7 +1,7 @@
 package pageobjects.google;
 
 
-import action.Action;
+import actions.ElementAction;
 import org.openqa.selenium.WebDriver;
 import ui.ILocator;
 
@@ -15,8 +15,8 @@ public class BasePage {
     }
 
 
-    protected Action action(ILocator locator){
-        return new Action(driver, locator);
+    protected ElementAction action(ILocator locator){
+        return new ElementAction(driver, locator);
     }
 
 }
