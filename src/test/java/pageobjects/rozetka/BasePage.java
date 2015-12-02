@@ -5,7 +5,7 @@ import actions.ElementAction;
 import actions.PageAction;
 import org.openqa.selenium.WebDriver;
 import ui.ILocator;
-import utils.WaitUtil;
+import utils.WaitImpl;
 
 public class BasePage {
 
@@ -27,8 +27,8 @@ public class BasePage {
         return new PageAction(driver);
     }
 
-    protected WaitUtil WaitUntil(ILocator locator) {
-        return new WaitUtil(driver, locator);
+    protected WaitImpl WaitUntil(ILocator locator) {
+        return new WaitImpl(driver, locator);
     }
 
 }

@@ -8,7 +8,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import ui.ILocator;
-import utils.WaitUtil;
+import utils.TestImpl;
+import utils.WaitImpl;
 
 
 public class TestRunner {
@@ -31,12 +32,16 @@ public class TestRunner {
         return new PageAction(driver);
     }
 
-    protected WaitUtil WaitUntil(final ILocator locator) {
-        return new WaitUtil(driver, locator);
+    protected WaitImpl WaitUntil(final ILocator locator) {
+        return new WaitImpl(driver, locator);
     }
 
-    protected WaitUtil WaitUntil() {
-        return new WaitUtil(driver);
+    protected WaitImpl WaitUntil() {
+        return new WaitImpl(driver);
+    }
+
+    protected TestImpl Test(){
+        return new TestImpl(driver);
     }
 
     @BeforeClass

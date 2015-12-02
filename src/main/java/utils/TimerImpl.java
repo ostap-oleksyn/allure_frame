@@ -10,15 +10,11 @@ public final class TimerImpl {
     public static boolean running;
     public static int timerDuration;
 
-    public TimerImpl() {
-    }
 
     public TimerImpl(final boolean start, final int timerDuration) {
         if (start) {
             this.start(timerDuration);
-
         }
-
     }
 
     public void start(final int timerDuration) {
