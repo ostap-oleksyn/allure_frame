@@ -1,6 +1,8 @@
 package tests;
 
+import actions.Verify;
 import listeners.TestListener;
+import listeners.VerifyListener;
 import locators.Google;
 import locators.Rozetka;
 import org.testng.annotations.Listeners;
@@ -16,7 +18,7 @@ import utils.LogUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@Listeners(TestListener.class)
+@Listeners({TestListener.class, VerifyListener.class})
 public class FrameworkTest extends TestRunner {
     @Test(enabled = false)
     @Severity(SeverityLevel.MINOR)
@@ -113,8 +115,10 @@ public class FrameworkTest extends TestRunner {
 
         Page().executeScript("scroll(0, 750)");
 
+        Verify(Page().hasText("sdfsdf")).withScreenshot().withMessage("test verify message").isTrue();
 
-        Element(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
+
+        /*Element(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
         Element(Rozetka.MANUFECTURER).at("PocketBook").click();
 
         assertThat(Element(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
@@ -152,7 +156,7 @@ public class FrameworkTest extends TestRunner {
         Element(Rozetka.ACTIVE_FILTER).at("PocketBook").click();
         Element(Rozetka.ACTIVE_FILTER).at(String.valueOf(maxRange)).click();
 
-        Page().takeScreenshot();
+        Page().takeScreenshot();*/
 
     }
 

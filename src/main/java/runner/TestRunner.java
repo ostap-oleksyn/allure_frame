@@ -3,6 +3,7 @@ package runner;
 
 import actions.ElementAction;
 import actions.PageAction;
+import actions.Verify;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
@@ -13,6 +14,8 @@ import utils.WaitImpl;
 
 
 public class TestRunner {
+
+    private static String result;
 
     private WebDriver driver;
 
@@ -42,6 +45,10 @@ public class TestRunner {
 
     protected TestImpl Test(){
         return new TestImpl(driver);
+    }
+
+    protected Verify Verify(boolean condition){
+        return new Verify(condition, driver);
     }
 
     @BeforeClass
