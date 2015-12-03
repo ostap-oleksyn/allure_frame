@@ -47,13 +47,13 @@ public final class ElementAction {
 
     public void mouseOverAndClick() {
         if (clickLocator == null) {
-            throw new IllegalArgumentException("Only one locator was passed to Action() method");
+            throw new IllegalArgumentException("Only one locator was passed to Element() method");
         }
-        new ElementActionImpl(new LocatorImpl(locator, position),new LocatorImpl(clickLocator, null), this.driver, timeOut).mouseOverAndClick();
+        new ElementActionImpl(new LocatorImpl(locator, position), new LocatorImpl(clickLocator, null), this.driver, timeOut).mouseOverAndClick();
     }
 
     public void type(final String text) {
-        new ElementActionImpl(new LocatorImpl(locator,position),driver, timeOut).type(text);
+        new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).type(text);
     }
 
     public void submit() {
@@ -76,11 +76,6 @@ public final class ElementAction {
         new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).setAttribute(attribute, value);
     }
 
-    public boolean isDisplayed() {
-        //TODO - move out somewhere?
-        return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).isDisplayed();
-    }
-
     public int getCount() {
         return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).getCount();
     }
@@ -89,11 +84,25 @@ public final class ElementAction {
         return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).getNumber();
     }
 
-    public void executeScript(final String javaScript){
+    public void executeScript(final String javaScript) {
         new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).executeScript(javaScript);
     }
 
     public List<WebElement> getList() {
         return new ElementActionImpl(new LocatorImpl(locator, position), this.driver, timeOut).getList();
     }
+
+    public boolean isDisplayed() {
+        return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).isDisplayed();
+    }
+
+    public boolean isEnabled() {
+        return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).isEnabled();
+    }
+
+    public boolean containsText(final String text) {
+        return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).containsText(text);
+    }
+
+
 }

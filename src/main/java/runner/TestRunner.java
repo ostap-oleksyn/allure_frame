@@ -20,11 +20,11 @@ public class TestRunner {
         return driver;
     }
 
-    protected ElementAction Action(final ILocator locator) {
+    protected ElementAction Element(final ILocator locator) {
         return new ElementAction(driver, locator);
     }
 
-    protected ElementAction Action(final ILocator overLocator, final ILocator clickLocator) {
+    protected ElementAction Element(final ILocator overLocator, final ILocator clickLocator) {
         return new ElementAction(driver, overLocator, clickLocator);
     }
 
