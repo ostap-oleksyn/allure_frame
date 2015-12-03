@@ -13,7 +13,7 @@ public final class PageActionImpl {
         this.driver = driver;
     }
 
-    @Step("----------------------SCREENSHOT----------------------")
+    @Step("[SCREENSHOT]")
     @Attachment(value = "Screenshot.png", type = "image/png")
     public byte[] takeScreenshot() {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
@@ -73,6 +73,4 @@ public final class PageActionImpl {
     public void executeScript(final String javaScript) {
         ((JavascriptExecutor) driver).executeScript(javaScript);
     }
-
-
 }

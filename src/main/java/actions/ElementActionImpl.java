@@ -153,5 +153,4 @@ public final class ElementActionImpl {
     public void executeScript(final String javaScript) {
         ((JavascriptExecutor) driver).executeScript(javaScript, getElement(locator));
     }
-
 }

@@ -1,6 +1,5 @@
 package tests;
 
-import actions.Verify;
 import listeners.TestListener;
 import listeners.VerifyListener;
 import locators.Google;
@@ -18,7 +17,7 @@ import utils.LogUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@Listeners({TestListener.class, VerifyListener.class})
+
 public class FrameworkTest extends TestRunner {
     @Test(enabled = false)
     @Severity(SeverityLevel.MINOR)
@@ -115,10 +114,8 @@ public class FrameworkTest extends TestRunner {
 
         Page().executeScript("scroll(0, 750)");
 
-        Verify(Page().hasText("sdfsdf")).withScreenshot().withMessage("test verify message").isTrue();
 
-
-        /*Element(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
+        Element(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
         Element(Rozetka.MANUFECTURER).at("PocketBook").click();
 
         assertThat(Element(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
@@ -126,6 +123,11 @@ public class FrameworkTest extends TestRunner {
 
 
         int filteredProductsCount = Element(Rozetka.PRODUCT_NAME).getCount();
+
+        Verify(filteredProductsCount < 3)
+                .withMessage("Filtered products count is less than 3")
+                .withScreenshot()
+                .isTrue();
 
         for (int index = 1; index <= filteredProductsCount; index++) {
             String productName = Element(Rozetka.PRODUCT_NAME).at(index).getText();
@@ -141,6 +143,11 @@ public class FrameworkTest extends TestRunner {
         assertThat(Element(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
                 .as("Price filter is displayed");
 
+        Verify(Element(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
+                .withMessage("Filtered products count is less than 3")
+                .withScreenshot()
+                .isFalse();
+
         filteredProductsCount = Element(Rozetka.PRODUCT_NAME).getCount();
 
         for (int index = 1; index <= filteredProductsCount; index++) {
@@ -151,14 +158,10 @@ public class FrameworkTest extends TestRunner {
                     .isBetween(1, maxRange);
         }
 
-        Page().takeScreenshot();
-
         Element(Rozetka.ACTIVE_FILTER).at("PocketBook").click();
         Element(Rozetka.ACTIVE_FILTER).at(String.valueOf(maxRange)).click();
 
-        Page().takeScreenshot();*/
+        Page().takeScreenshot();
 
     }
-
-
 }

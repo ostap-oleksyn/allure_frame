@@ -2,15 +2,15 @@ package actions;
 
 
 import org.openqa.selenium.WebDriver;
+import ru.yandex.qatools.allure.annotations.Step;
 import runner.TestRunner;
-import utils.LogUtil;
 
 import java.lang.reflect.Field;
 
 public class Verify {
 
-    private WebDriver driver;
-    private boolean condition;
+    final private WebDriver driver;
+    final private boolean condition;
     private boolean takeScreenshot;
     private String message;
 
@@ -20,51 +20,45 @@ public class Verify {
         this.condition = condition;
     }
 
-    public Verify withScreenshot(){
+    public Verify withScreenshot() {
         this.takeScreenshot = true;
         return this;
     }
 
-    public Verify withMessage(final String message){
+    public Verify withMessage(final String message) {
         this.message = message;
         return this;
     }
 
     public void isTrue() {
-        if (!condition){
-            Field f = null;
+        if (!condition) {
             try {
-                f = TestRunner.class.getDeclaredField("result");
-            } catch (NoSuchFieldException e) {
+                final Field field = TestRunner.class.getDeclaredField("isVerificationFailed");
+                field.setAccessible(true);
+                field.set(null, true);
+                logVerfication(message);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
             }
-            f.setAccessible(true);
-            try {
-                f.set(null, "fail");
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        if (message != null){
-            LogUtil.log("Verify: " + message );
-        }
-
-        if (takeScreenshot){
-            new PageActionImpl(driver).takeScreenshot();
         }
     }
 
-    public void isfalse() throws NoSuchFieldException, IllegalAccessException {
-        if (condition){
-            Field f = TestRunner.class.getDeclaredField("result");
-            f.setAccessible(true);
-            f.set(null, "fail");
+    public void isFalse() {
+        if (condition) {
+            try {
+                final Field field = TestRunner.class.getDeclaredField("isVerificationFailed");
+                field.setAccessible(true);
+                field.set(null, true);
+                logVerfication(message);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
-        if (message != null){
-            LogUtil.log("Verify: " + message );
-        }
+    }
 
-        if (takeScreenshot){
+    @Step("FAILED: {0}")
+    private void logVerfication(final String message) {
+        if (takeScreenshot) {
             new PageActionImpl(driver).takeScreenshot();
         }
     }

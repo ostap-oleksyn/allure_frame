@@ -14,8 +14,7 @@ import utils.WaitImpl;
 
 
 public class TestRunner {
-
-    private static String result;
+    private static Boolean isVerificationFailed;
 
     private WebDriver driver;
 
@@ -47,7 +46,7 @@ public class TestRunner {
         return new TestImpl(driver);
     }
 
-    protected Verify Verify(boolean condition){
+    protected Verify Verify(final boolean condition){
         return new Verify(condition, driver);
     }
 

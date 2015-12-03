@@ -103,6 +103,4 @@ public final class ElementAction {
     public boolean containsText(final String text) {
         return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).containsText(text);
     }
-
-
 }

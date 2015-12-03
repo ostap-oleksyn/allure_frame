@@ -70,6 +70,12 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>allure.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>listeners.TestListener, listeners.VerifyListener</value>
+                        </property>
+                    </properties>
                 </configuration>
                 <dependencies>
                     <dependency>
