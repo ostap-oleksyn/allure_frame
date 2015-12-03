@@ -15,8 +15,20 @@ public final class PageAction {
         this.driver = driver;
     }
 
+    public void refresh() {
+        new PageActionImpl(this.driver).refresh();
+    }
+
     public void navigateTo(final String url) {
         new PageActionImpl(this.driver).navigate(url);
+    }
+
+    public void navigateBack() {
+        new PageActionImpl(this.driver).navigateBack();
+    }
+
+    public void navigateForward() {
+        new PageActionImpl(this.driver).navigateForward();
     }
 
     public String getTitle() {

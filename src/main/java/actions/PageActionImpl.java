@@ -19,9 +19,24 @@ public final class PageActionImpl {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
+    @Step("Refreshed page")
+    public void refresh() {
+        driver.navigate().refresh();
+    }
+
     @Step("Navigated to {0}")
     public void navigate(final String url) {
         driver.get(url);
+    }
+
+    @Step("Navigated back")
+    public void navigateBack() {
+        driver.navigate().back();
+    }
+
+    @Step("Navigated forward")
+    public void navigateForward() {
+        driver.navigate().forward();
     }
 
     @Step("Switched to frame {0}")
