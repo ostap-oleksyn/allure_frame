@@ -17,7 +17,6 @@ import utils.LogUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-
 public class FrameworkTest extends TestRunner {
     @Test(enabled = false)
     @Severity(SeverityLevel.MINOR)
@@ -114,9 +113,10 @@ public class FrameworkTest extends TestRunner {
 
         Page().executeScript("scroll(0, 750)");
 
-
         Element(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
         Element(Rozetka.MANUFECTURER).at("PocketBook").click();
+
+        Test().skip("Test fail message");
 
         assertThat(Element(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
                 .as("Manufacturer filter is displayed");
@@ -125,7 +125,7 @@ public class FrameworkTest extends TestRunner {
         int filteredProductsCount = Element(Rozetka.PRODUCT_NAME).getCount();
 
         Verify(filteredProductsCount < 3)
-                .withMessage("Filtered products count is less than 3")
+                .withMessage("Test verification message")
                 .withScreenshot()
                 .isTrue();
 
@@ -144,7 +144,7 @@ public class FrameworkTest extends TestRunner {
                 .as("Price filter is displayed");
 
         Verify(Element(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
-                .withMessage("Filtered products count is less than 3")
+                .withMessage("Test verification message")
                 .withScreenshot()
                 .isFalse();
 

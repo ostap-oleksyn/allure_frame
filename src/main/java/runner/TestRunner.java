@@ -3,7 +3,7 @@ package runner;
 
 import actions.ElementAction;
 import actions.PageAction;
-import actions.Verify;
+import actions.VerifyImpl;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
@@ -14,7 +14,7 @@ import utils.WaitImpl;
 
 
 public class TestRunner {
-    private static Boolean isVerificationFailed;
+    private static Boolean isVerificationFailed = false;
 
     private WebDriver driver;
 
@@ -46,8 +46,8 @@ public class TestRunner {
         return new TestImpl(driver);
     }
 
-    protected Verify Verify(final boolean condition){
-        return new Verify(condition, driver);
+    protected VerifyImpl Verify(final boolean condition){
+        return new VerifyImpl(condition, driver);
     }
 
     @BeforeClass
