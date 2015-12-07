@@ -1,34 +1,32 @@
 package utils;
 
 
-import actions.PageAction;
-import exceptions.TestFailException;
+import actions.PageActionImpl;
+import exceptions.TestFailedException;
 import org.openqa.selenium.WebDriver;
 import org.testng.SkipException;
+import ru.yandex.qatools.allure.annotations.Step;
 
 public final class TestImpl {
 
     private final WebDriver driver;
+    private boolean takeScreenshot;
 
     public TestImpl(final WebDriver driver) {
         this.driver = driver;
     }
 
-    public void skip(final String message) {
-        LogUtil.log("TEST SKIPPED: " + message);
-        throw new SkipException(message);
+    public TestImpl withScreenshot() {
+        this.takeScreenshot = true;
+        return this;
     }
 
-    public void skip(final String message, final boolean takeScreenshot) {
-        LogUtil.log("TEST SKIPPED: " + message);
-        if (takeScreenshot){
-            new PageAction(driver).takeScreenshot();
-        }
-        throw new SkipException(message);
+    public void skip(final String message) {
+        logSkip(message);
     }
 
     public void fail(final String message) {
-        throw new TestFailException(message);
+        throw new TestFailedException(message);
     }
 
     public void sleep(final int seconds) {
@@ -58,5 +56,13 @@ public final class TestImpl {
         } else {
             throw new IllegalStateException("Timer has not been set. See Test().timer()");
         }
+    }
+
+    @Step("TEST SKIPPED: {0}")
+    private void logSkip(final String message) {
+        if (takeScreenshot) {
+            new PageActionImpl(driver).takeScreenshot();
+        }
+        throw new SkipException(message);
     }
 }

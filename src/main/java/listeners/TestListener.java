@@ -19,7 +19,7 @@ public final class TestListener extends TestListenerAdapter {
         takeScreenshot(testResult.getMethod().getMethodName(), driver);
     }
 
-    @Step("-------------------------------FAIL SCREENSHOT-------------------------------")
+    @Step("[FAIL SCREENSHOT]")
     @Attachment(value = "{0}", type = "image/png")
     public byte[] takeScreenshot(final String methodName, final WebDriver driver) {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);

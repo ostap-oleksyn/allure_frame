@@ -1,9 +1,11 @@
 package actions;
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ui.ILocator;
+import ui.LocatorImpl;
 
 public final class PageAction {
 
@@ -13,8 +15,20 @@ public final class PageAction {
         this.driver = driver;
     }
 
+    public void refresh() {
+        new PageActionImpl(this.driver).refresh();
+    }
+
     public void navigateTo(final String url) {
         new PageActionImpl(this.driver).navigate(url);
+    }
+
+    public void navigateBack() {
+        new PageActionImpl(this.driver).navigateBack();
+    }
+
+    public void navigateForward() {
+        new PageActionImpl(this.driver).navigateForward();
     }
 
     public String getTitle() {
@@ -62,5 +76,9 @@ public final class PageAction {
 
     public void takeScreenshot() {
         new PageActionImpl(this.driver).takeScreenshot();
+    }
+
+    public boolean hasText(final String text){
+        return !driver.findElements(By.xpath(".//*[contains(text(),'" + text + "')]")).isEmpty();
     }
 }

@@ -72,6 +72,14 @@ public final class ElementActionImpl {
         return isDisplayed;
     }
 
+    public boolean isEnabled() {
+        return getElement(locator).isEnabled();
+    }
+
+    public boolean containsText(final String text) {
+        return getElement(locator).getText().equalsIgnoreCase(text);
+    }
+
     public int getCount() {
         return getList().size();
     }
@@ -145,5 +153,4 @@ public final class ElementActionImpl {
     public void executeScript(final String javaScript) {
         ((JavascriptExecutor) driver).executeScript(javaScript, getElement(locator));
     }
-
 }

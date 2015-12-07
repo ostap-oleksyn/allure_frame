@@ -1,6 +1,7 @@
 package tests;
 
 import listeners.TestListener;
+import listeners.VerifyListener;
 import locators.Google;
 import locators.Rozetka;
 import org.testng.annotations.Listeners;
@@ -16,30 +17,29 @@ import utils.LogUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@Listeners(TestListener.class)
 public class FrameworkTest extends TestRunner {
     @Test(enabled = false)
     @Severity(SeverityLevel.MINOR)
     public void googleTest() {
         Page().navigateTo("https://google.com");
-        Action(Google.SEARCH_FIELD).type("docker");
-        Action(Google.SEARCH_BUTTON).click();
+        Element(Google.SEARCH_FIELD).type("docker");
+        Element(Google.SEARCH_BUTTON).click();
 
-        String t0 = Action(Google.RESULT_LINK).getText();
-        String t1 = Action(Google.RESULT_LINK).at(2).getText();
-        String t2 = Action(Google.RESULT_LINK).getText();
-        String t3 = Action(Google.RESULT_LINK).getText();
-        String t4 = Action(Google.RESULT_LINK).at(10).getText();
+        String t0 = Element(Google.RESULT_LINK).getText();
+        String t1 = Element(Google.RESULT_LINK).at(2).getText();
+        String t2 = Element(Google.RESULT_LINK).getText();
+        String t3 = Element(Google.RESULT_LINK).getText();
+        String t4 = Element(Google.RESULT_LINK).at(10).getText();
 
-        Action(Google.RESULT_LINK).click();
+        Element(Google.RESULT_LINK).click();
         Test().sleep(5);
         getDriver().navigate().back();
 
-        Action(Google.RESULT_LINK).at(10).click();
+        Element(Google.RESULT_LINK).at(10).click();
         Test().sleep(5);
         getDriver().navigate().back();
 
-        Action(Google.RESULT_LINK).click();
+        Element(Google.RESULT_LINK).click();
         Page().takeScreenshot();
 
         LogUtil.log(t0);
@@ -62,14 +62,14 @@ public class FrameworkTest extends TestRunner {
         String searchTerm = "gtx 960";
         ResultPage resultPage = homePage.doSearchFor(searchTerm);
 
-        final int numberOfResults = Action(Rozetka.RESULT_LINK).getCount();
+        final int numberOfResults = Element(Rozetka.RESULT_LINK).getCount();
 
         LogUtil.log("Total results: " + numberOfResults);
 
         int randomProduct = Generate.integer(1, 5);
         LogUtil.log("" + randomProduct);
-        String firstProduct = Action(Rozetka.RESULT_LINK).at(randomProduct).getText();
-        int firstProductPrice = Action(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
+        String firstProduct = Element(Rozetka.RESULT_LINK).at(randomProduct).getText();
+        int firstProductPrice = Element(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
         LogUtil.log(firstProduct);
         LogUtil.log(String.valueOf(firstProductPrice));
 
@@ -77,14 +77,14 @@ public class FrameworkTest extends TestRunner {
 
         randomProduct = Generate.integer(6, 17);
         LogUtil.log("" + (randomProduct - 1));
-        String secondProduct = Action(Rozetka.RESULT_LINK).at(randomProduct).getText();
-        int secondProductPrice = Action(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
+        String secondProduct = Element(Rozetka.RESULT_LINK).at(randomProduct).getText();
+        int secondProductPrice = Element(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
         LogUtil.log(secondProduct);
         LogUtil.log(String.valueOf(secondProductPrice));
 
         resultPage.addProductToCart(randomProduct - 1);
 
-        int totalPrice = Action(Rozetka.CART_TOTAL_COST).getNumber();
+        int totalPrice = Element(Rozetka.CART_TOTAL_COST).getNumber();
 
         assertThat(totalPrice)
                 .as("Total price in cart doesn't match")
@@ -113,47 +113,55 @@ public class FrameworkTest extends TestRunner {
 
         Page().executeScript("scroll(0, 750)");
 
-        Action(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
-        Action(Rozetka.MANUFECTURER).at("PocketBook").click();
+        Element(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
+        Element(Rozetka.MANUFECTURER).at("PocketBook").click();
 
-        assertThat(Action(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
+        Test().skip("Test fail message");
+
+        assertThat(Element(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
                 .as("Manufacturer filter is displayed");
 
 
-        int filteredProductsCount = Action(Rozetka.PRODUCT_NAME).getCount();
+        int filteredProductsCount = Element(Rozetka.PRODUCT_NAME).getCount();
+
+        Verify(filteredProductsCount < 3)
+                .withMessage("Test verification message")
+                .withScreenshot()
+                .isTrue();
 
         for (int index = 1; index <= filteredProductsCount; index++) {
-            String productName = Action(Rozetka.PRODUCT_NAME).at(index).getText();
+            String productName = Element(Rozetka.PRODUCT_NAME).at(index).getText();
 
             assertThat(productName)
                     .as("Filtered products contain manufacturer name")
                     .contains("PocketBook");
         }
 
-        Action(Rozetka.MAX_PRICE_FILTER).type(String.valueOf(maxRange));
-        Action(Rozetka.MAX_PRICE_FILTER).submit();
+        Element(Rozetka.MAX_PRICE_FILTER).type(String.valueOf(maxRange));
+        Element(Rozetka.MAX_PRICE_FILTER).submit();
 
-        assertThat(Action(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
+        assertThat(Element(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
                 .as("Price filter is displayed");
 
-        filteredProductsCount = Action(Rozetka.PRODUCT_NAME).getCount();
+        Verify(Element(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
+                .withMessage("Test verification message")
+                .withScreenshot()
+                .isFalse();
+
+        filteredProductsCount = Element(Rozetka.PRODUCT_NAME).getCount();
 
         for (int index = 1; index <= filteredProductsCount; index++) {
-            int productPrice = Action(Rozetka.PRODUCT_PRICE).at(index).getNumber();
+            int productPrice = Element(Rozetka.PRODUCT_PRICE).at(index).getNumber();
 
             assertThat(productPrice)
                     .as("Product price filter is applied")
                     .isBetween(1, maxRange);
         }
 
-        Page().takeScreenshot();
-
-        Action(Rozetka.ACTIVE_FILTER).at("PocketBook").click();
-        Action(Rozetka.ACTIVE_FILTER).at(String.valueOf(maxRange)).click();
+        Element(Rozetka.ACTIVE_FILTER).at("PocketBook").click();
+        Element(Rozetka.ACTIVE_FILTER).at(String.valueOf(maxRange)).click();
 
         Page().takeScreenshot();
 
     }
-
-
 }

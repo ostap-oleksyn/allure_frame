@@ -3,6 +3,7 @@ package runner;
 
 import actions.ElementAction;
 import actions.PageAction;
+import actions.VerifyImpl;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
@@ -13,6 +14,7 @@ import utils.WaitImpl;
 
 
 public class TestRunner {
+    private static Boolean isVerificationFailed = false;
 
     private WebDriver driver;
 
@@ -20,11 +22,11 @@ public class TestRunner {
         return driver;
     }
 
-    protected ElementAction Action(final ILocator locator) {
+    protected ElementAction Element(final ILocator locator) {
         return new ElementAction(driver, locator);
     }
 
-    protected ElementAction Action(final ILocator overLocator, final ILocator clickLocator) {
+    protected ElementAction Element(final ILocator overLocator, final ILocator clickLocator) {
         return new ElementAction(driver, overLocator, clickLocator);
     }
 
@@ -42,6 +44,10 @@ public class TestRunner {
 
     protected TestImpl Test(){
         return new TestImpl(driver);
+    }
+
+    protected VerifyImpl Verify(final boolean condition){
+        return new VerifyImpl(condition, driver);
     }
 
     @BeforeClass
