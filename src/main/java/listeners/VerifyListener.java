@@ -1,6 +1,6 @@
 package listeners;
 
-import exceptions.TestFailException;
+import exceptions.TestFailedException;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
@@ -27,7 +27,7 @@ public class VerifyListener implements IInvokedMethodListener {
                 if (isVerificationFailed) {
                     iTestResult.setStatus(ITestResult.FAILURE);
                     if (testException == null) {
-                        iTestResult.setThrowable(new TestFailException("At least 1 verification failed"));
+                        iTestResult.setThrowable(new TestFailedException("At least 1 verification failed"));
                     } else {
                         iTestResult.setThrowable(testException);
                     }

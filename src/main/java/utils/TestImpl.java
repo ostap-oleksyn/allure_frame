@@ -2,7 +2,7 @@ package utils;
 
 
 import actions.PageActionImpl;
-import exceptions.TestFailException;
+import exceptions.TestFailedException;
 import org.openqa.selenium.WebDriver;
 import org.testng.SkipException;
 import ru.yandex.qatools.allure.annotations.Step;
@@ -26,7 +26,7 @@ public final class TestImpl {
     }
 
     public void fail(final String message) {
-        throw new TestFailException(message);
+        throw new TestFailedException(message);
     }
 
     public void sleep(final int seconds) {
