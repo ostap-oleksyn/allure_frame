@@ -6,7 +6,7 @@ import ru.yandex.qatools.allure.annotations.Step;
 import runner.TestRunner;
 
 import java.lang.reflect.Field;
-
+@Deprecated
 public class VerifyImpl {
 
     final private WebDriver driver;

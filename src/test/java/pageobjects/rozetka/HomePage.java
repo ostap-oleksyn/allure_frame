@@ -15,17 +15,17 @@ public class HomePage extends BasePage {
 
     @Step("Login")
     public HomePage login(){
-        Action(Rozetka.PERSONAL_LINK).click();
-        Action(Rozetka.LOGIN_FIELD).type("ostap.oleksyn@gmail.com");
-        Action(Rozetka.PASSWORD_FIELD).type("omnius123");
-        Action(Rozetka.LOGIN_BUTTON).click();
+        Element(Rozetka.PERSONAL_LINK).click();
+        Element(Rozetka.LOGIN_FIELD).type("ostap.oleksyn@gmail.com");
+        Element(Rozetka.PASSWORD_FIELD).type("omnius123");
+        Element(Rozetka.LOGIN_BUTTON).click();
         return this;
     }
 
     @Step("Search for {0}")
     public ResultPage doSearchFor(final String term){
-        Action(Rozetka.SEARCH_FIELD).type(term);
-        Action(Rozetka.SEARCH_FIELD).submit();
+        Element(Rozetka.SEARCH_FIELD).type(term);
+        Element(Rozetka.SEARCH_FIELD).submit();
         return new ResultPage(driver);
     }
 }

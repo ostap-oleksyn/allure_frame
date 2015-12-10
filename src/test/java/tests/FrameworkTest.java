@@ -1,10 +1,7 @@
 package tests;
 
-import listeners.TestListener;
-import listeners.VerifyListener;
 import locators.Google;
 import locators.Rozetka;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pageobjects.rozetka.HomePage;
 import pageobjects.rozetka.ResultPage;
@@ -116,7 +113,6 @@ public class FrameworkTest extends TestRunner {
         Element(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
         Element(Rozetka.MANUFECTURER).at("PocketBook").click();
 
-        Test().skip("Test fail message");
 
         assertThat(Element(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
                 .as("Manufacturer filter is displayed");
@@ -124,10 +120,6 @@ public class FrameworkTest extends TestRunner {
 
         int filteredProductsCount = Element(Rozetka.PRODUCT_NAME).getCount();
 
-        Verify(filteredProductsCount < 3)
-                .withMessage("Test verification message")
-                .withScreenshot()
-                .isTrue();
 
         for (int index = 1; index <= filteredProductsCount; index++) {
             String productName = Element(Rozetka.PRODUCT_NAME).at(index).getText();
@@ -143,10 +135,6 @@ public class FrameworkTest extends TestRunner {
         assertThat(Element(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
                 .as("Price filter is displayed");
 
-        Verify(Element(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
-                .withMessage("Test verification message")
-                .withScreenshot()
-                .isFalse();
 
         filteredProductsCount = Element(Rozetka.PRODUCT_NAME).getCount();
 

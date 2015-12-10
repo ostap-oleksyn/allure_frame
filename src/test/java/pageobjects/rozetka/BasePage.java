@@ -1,25 +1,29 @@
 package pageobjects.rozetka;
 
 
+import actions.Action;
 import actions.ElementAction;
 import actions.PageAction;
 import org.openqa.selenium.WebDriver;
 import ui.ILocator;
+import utils.TestImpl;
 import utils.WaitImpl;
 
 public class BasePage {
 
     protected WebDriver driver;
+    protected Action action;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
+        this.action = new Action(this.driver);
     }
 
-    protected ElementAction Action(ILocator locator) {
+    protected ElementAction Element(final ILocator locator) {
         return new ElementAction(driver, locator);
     }
 
-    protected ElementAction Action(ILocator overLocator, ILocator clickLocator) {
+    protected ElementAction Element(final ILocator overLocator, final ILocator clickLocator) {
         return new ElementAction(driver, overLocator, clickLocator);
     }
 
@@ -27,8 +31,16 @@ public class BasePage {
         return new PageAction(driver);
     }
 
-    protected WaitImpl WaitUntil(ILocator locator) {
+    protected WaitImpl WaitUntil(final ILocator locator) {
         return new WaitImpl(driver, locator);
+    }
+
+    protected WaitImpl WaitUntil() {
+        return new WaitImpl(driver);
+    }
+
+    protected TestImpl Test(){
+        return new TestImpl(driver);
     }
 
 }

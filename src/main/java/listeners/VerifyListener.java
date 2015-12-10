@@ -8,7 +8,7 @@ import runner.TestRunner;
 
 import java.lang.reflect.Field;
 
-
+@Deprecated
 public class VerifyListener implements IInvokedMethodListener {
     @Override
     public void beforeInvocation(final IInvokedMethod iInvokedMethod, final ITestResult iTestResult) {
