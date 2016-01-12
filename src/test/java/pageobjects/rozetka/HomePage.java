@@ -16,8 +16,8 @@ public class HomePage extends BasePage {
     @Step("Login")
     public HomePage login(){
         Element(Rozetka.PERSONAL_LINK).click();
-        Element(Rozetka.LOGIN_FIELD).type("ostap.oleksyn@gmail.com");
-        Element(Rozetka.PASSWORD_FIELD).type("omnius123");
+        Element(Rozetka.LOGIN_FIELD).type("gobland@mail.ru");
+        Element(Rozetka.PASSWORD_FIELD).type("test1234");
         Element(Rozetka.LOGIN_BUTTON).click();
         return this;
     }

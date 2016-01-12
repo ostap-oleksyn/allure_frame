@@ -56,7 +56,7 @@ public class FrameworkTest extends TestRunner {
         HomePage homePage = new HomePage(getDriver());
         homePage.login();
 
-        WaitUntil(Rozetka.PERSONAL_LINK).containsText("Остап Олексин");
+        WaitUntil(Rozetka.PERSONAL_LINK).containsText("test");
 
         String searchTerm = "gtx 960";
         ResultPage resultPage = homePage.doSearchFor(searchTerm);
