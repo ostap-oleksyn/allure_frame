@@ -1,20 +1,21 @@
 package exceptions;
 
 
-public class TestFailedException extends AssertionError {
+public final class TestFailedException extends AssertionError {
 
     public TestFailedException() {
+        super();
     }
 
-    public TestFailedException(String message) {
+    public TestFailedException(final String message) {
         super(message);
     }
 
-    public TestFailedException(String message, Throwable cause) {
+    public TestFailedException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
-    public TestFailedException(Throwable cause) {
+    public TestFailedException(final Throwable cause) {
         super(cause);
     }
 

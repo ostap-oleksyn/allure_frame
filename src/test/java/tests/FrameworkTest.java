@@ -22,6 +22,8 @@ public class FrameworkTest extends TestRunner {
         Element(Google.SEARCH_FIELD).type("docker");
         Element(Google.SEARCH_BUTTON).click();
 
+        Verify(1 == 1).withScreenshot().withMessage("test pass message").isTrue();
+
         String t0 = Element(Google.RESULT_LINK).getText();
         String t1 = Element(Google.RESULT_LINK).at(2).getText();
         String t2 = Element(Google.RESULT_LINK).getText();
@@ -54,7 +56,7 @@ public class FrameworkTest extends TestRunner {
         HomePage homePage = new HomePage(getDriver());
         homePage.login();
 
-        WaitUntil(Rozetka.PERSONAL_LINK).containsText("Остап Олексин");
+        WaitUntil(Rozetka.PERSONAL_LINK).containsText("test");
 
         String searchTerm = "gtx 960";
         ResultPage resultPage = homePage.doSearchFor(searchTerm);
@@ -110,12 +112,15 @@ public class FrameworkTest extends TestRunner {
 
         Page().executeScript("scroll(0, 750)");
 
+        Verify(1 == 1).withScreenshot().withMessage("test message").isFalse();
+
         Element(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
         Element(Rozetka.MANUFECTURER).at("PocketBook").click();
 
 
         assertThat(Element(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
-                .as("Manufacturer filter is displayed");
+                .as("Manufacturer filter is displayed")
+                .isTrue();
 
 
         int filteredProductsCount = Element(Rozetka.PRODUCT_NAME).getCount();

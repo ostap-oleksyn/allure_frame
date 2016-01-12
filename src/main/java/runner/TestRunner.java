@@ -3,17 +3,19 @@ package runner;
 
 import actions.ElementAction;
 import actions.PageAction;
+import actions.VerifyImpl;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import ui.ILocator;
 import utils.TestImpl;
+import utils.TestResult;
 import utils.WaitImpl;
 
 
 public class TestRunner {
-//    private static Boolean isVerificationFailed = false;
+    private TestResult result;
 
     private WebDriver driver;
 
@@ -45,10 +47,15 @@ public class TestRunner {
         return new TestImpl(driver);
     }
 
+    protected VerifyImpl Verify(final boolean condition) {
+        return new VerifyImpl(condition, driver, result);
+    }
+
 
     @BeforeClass
     public void setUp() {
         //TODO - implement grid support
+        result = new TestResult();
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
     }

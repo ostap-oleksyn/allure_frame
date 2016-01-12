@@ -4,12 +4,12 @@ import exceptions.TestFailedException;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ITestResult;
-import runner.TestRunner;
+import utils.TestResult;
 
 import java.lang.reflect.Field;
 
-@Deprecated
-public class VerifyListener implements IInvokedMethodListener {
+
+public final class VerifyListener implements IInvokedMethodListener {
     @Override
     public void beforeInvocation(final IInvokedMethod iInvokedMethod, final ITestResult iTestResult) {
     }
@@ -20,11 +20,12 @@ public class VerifyListener implements IInvokedMethodListener {
         final Throwable testException = iTestResult.getThrowable();
         if (iInvokedMethod.getTestMethod().isTest()) {
             try {
-                result = TestRunner.class.getDeclaredField("isVerificationFailed");
+                final Object object = iInvokedMethod.getTestMethod().getInstance();
+                result = iInvokedMethod.getTestMethod().getRealClass().getSuperclass().getDeclaredField("result");
                 result.setAccessible(true);
-                final Boolean isVerificationFailed = (Boolean) result.get(null);
+                final TestResult isVerificationFailed = (TestResult) result.get(object);
 
-                if (isVerificationFailed) {
+                if (isVerificationFailed.getResult()) {
                     iTestResult.setStatus(ITestResult.FAILURE);
                     if (testException == null) {
                         iTestResult.setThrowable(new TestFailedException("At least 1 verification failed"));

@@ -3,59 +3,62 @@ package actions;
 
 import org.openqa.selenium.WebDriver;
 import ru.yandex.qatools.allure.annotations.Step;
-import runner.TestRunner;
+import utils.TestResult;
 
-import java.lang.reflect.Field;
-@Deprecated
-public class VerifyImpl {
+public final class VerifyImpl {
 
-    final private WebDriver driver;
-    final private boolean condition;
-    private boolean takeScreenshot;
+    private final WebDriver driver;
+    private final boolean condition;
+    private final TestResult result;
+    private boolean withScreenshot;
+    private boolean withMessage;
     private String message = "";
 
-    public VerifyImpl(final boolean condition, final WebDriver driver) {
+    public VerifyImpl(final boolean condition, final WebDriver driver, final TestResult result) {
         this.driver = driver;
         this.condition = condition;
+        this.result = result;
     }
 
     public VerifyImpl withScreenshot() {
-        this.takeScreenshot = true;
+        this.withScreenshot = true;
         return this;
     }
 
     public VerifyImpl withMessage(final String message) {
+        this.withMessage = true;
         this.message = message;
         return this;
     }
 
     public void isTrue() {
         if (!condition) {
-            setVerificationResult();
-            logVerification(message);
+            result.fail();
+            logFailedMessage(message);
+        } else if (withMessage){
+            logPassedMessage(message);
         }
     }
 
     public void isFalse() {
         if (condition) {
-            setVerificationResult();
-            logVerification(message);
-        }
-    }
-
-    private void setVerificationResult() {
-        try {
-            final Field field = TestRunner.class.getDeclaredField("isVerificationFailed");
-            field.setAccessible(true);
-            field.set(null, true);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            result.fail();
+            logFailedMessage(message);
+        } else if (withMessage){
+            logPassedMessage(message);
         }
     }
 
     @Step("VERIFICATION FAILED: {0}")
-    private void logVerification(final String message) {
-        if (takeScreenshot) {
+    private void logFailedMessage(final String message) {
+        if (withScreenshot) {
+            new PageActionImpl(driver).takeScreenshot();
+        }
+    }
+
+    @Step("VERIFICATION PASSED: {0}")
+    private void logPassedMessage(final String message) {
+        if (withScreenshot) {
             new PageActionImpl(driver).takeScreenshot();
         }
     }

@@ -73,7 +73,7 @@
                     <properties>
                         <property>
                             <name>listener</name>
-                            <value>listeners.TestListener</value>
+                            <value>listeners.TestListener, listeners.VerifyListener</value>
                         </property>
                     </properties>
                 </configuration>
