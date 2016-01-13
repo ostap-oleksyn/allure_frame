@@ -98,7 +98,7 @@ public class FrameworkTest extends TestRunner {
 
         resultPage.logOut();
 
-        WaitUntil(Rozetka.PERSONAL_LINK).notContainsText("Остап Олексин");
+        WaitUntil(Rozetka.PERSONAL_LINK).notContainsText("test");
 
         Page().takeScreenshot();
     }

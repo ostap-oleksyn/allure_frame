@@ -53,7 +53,7 @@ public enum Rozetka implements ILocator {
             ".//*[@class='process']"),
     LOGOUT_LINK("Logout link",
             LocatorType.BY_XPATH,
-            ".//*[@id='header_user_menu']/li[10]/a"),
+            ".//*[@id='header_user_menu']/li/a[@name='signout']"),
     PC_SIDE_MENU("Computers side menu",
             LocatorType.BY_XPATH,
             ".//*[@id='m-main']/li[1]/a"),
