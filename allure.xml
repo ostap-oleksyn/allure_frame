@@ -6,33 +6,11 @@
 
     <test name="Famework Test">
         <classes>
-            <class name="tests.FrameworkTest">
-                <methods>
-                    <include name="googleTest"/>
-                </methods>
-            </class>
+            <class name="tests.FrameworkTest"/>
         </classes>
     </test>
 
-    <test name="Famework Test1">
-        <classes>
-            <class name="tests.FrameworkTest">
-                <methods>
-                    <include name="rozetkaTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-
-    <test name="Famework Test2">
-        <classes>
-            <class name="tests.FrameworkTest">
-                <methods>
-                    <include name="rozetkaPriceFilterTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+    
 
 
 </suite>
