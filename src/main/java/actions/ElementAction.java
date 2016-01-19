@@ -45,11 +45,19 @@ public final class ElementAction {
         new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).click();
     }
 
+    public void hover() {
+        new ElementActionImpl(new LocatorImpl(locator, position), this.driver, timeOut).hover();
+    }
+
     public void mouseOverAndClick() {
         if (clickLocator == null) {
             throw new IllegalArgumentException("Only one locator was passed to Element() method");
         }
         new ElementActionImpl(new LocatorImpl(locator, position), new LocatorImpl(clickLocator, null), this.driver, timeOut).mouseOverAndClick();
+    }
+
+    public void scrollTo() {
+        new ElementActionImpl(new LocatorImpl(locator, position), this.driver, timeOut).scrollTo();
     }
 
     public void type(final String text) {

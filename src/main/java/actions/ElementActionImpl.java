@@ -4,7 +4,6 @@ package actions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.annotations.Step;
 import ui.LocatorImpl;
@@ -93,29 +92,49 @@ public final class ElementActionImpl {
     }
 
     public void click() {
-        click(this.locator);
+        click(locator);
+    }
+
+    public void hover() {
+        hover(locator);
     }
 
     public void mouseOverAndClick() {
         mouseOverAndClick(locator, secondaryLocator);
     }
 
-    public void type(final String text){
+    public void scrollTo() {
+        scrollTo(locator);
+    }
+
+    public void type(final String text) {
         if (locator.toString().toLowerCase().contains("password")) {
             final String protectedText = text.replaceAll(".?", "*");
-           type(protectedText, text, locator);
+            type(protectedText, text, locator);
         } else {
             type(text, locator);
         }
     }
 
-    public void submit(){
+    public void submit() {
         submit(this.locator);
     }
 
     @Step("Clicked {0}")
     private void click(final LocatorImpl locator) {
         getElement(locator).click();
+    }
+
+    @Step("Scrolled to {0}")
+    private void scrollTo(final LocatorImpl locator) {
+        final String scrollScript = "arguments[0].scrollIntoView(true);";
+        ((JavascriptExecutor) driver).executeScript(scrollScript, getElement(locator));
+    }
+
+    @Step("Hovered over {0}")
+    private void hover(final LocatorImpl overLocator) {
+        final Actions action = new Actions(driver);
+        action.moveToElement(getElement(overLocator)).perform();
     }
 
     @Step("Hovered over {0} and clicked {1}")
