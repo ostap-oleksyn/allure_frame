@@ -140,9 +140,8 @@ public final class ElementActionImpl {
     @Step("Hovered over {0} and clicked {1}")
     private void mouseOverAndClick(final LocatorImpl overLocator, final LocatorImpl clickLocator) {
         final Actions action = new Actions(driver);
-        action.moveToElement(getElement(overLocator));
-        action.perform();
-        getElement(clickLocator).click();
+        action.moveToElement(getElement(overLocator)).perform();
+        action.click(getElement(clickLocator)).perform();
     }
 
     @Step("Set {0} attribute ''{1}'' to ''{2}''")
