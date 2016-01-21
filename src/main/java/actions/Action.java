@@ -4,7 +4,6 @@ package actions;
 import org.openqa.selenium.WebDriver;
 import ui.ILocator;
 import utils.TestImpl;
-import utils.WaitImpl;
 
 public final class Action {
 
@@ -28,10 +27,6 @@ public final class Action {
 
     public WaitImpl WaitUntil(final ILocator locator) {
         return new WaitImpl(driver, locator);
-    }
-
-    public WaitImpl WaitUntil() {
-        return new WaitImpl(driver);
     }
 
     public TestImpl Test() {

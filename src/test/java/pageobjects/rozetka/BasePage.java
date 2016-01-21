@@ -7,7 +7,7 @@ import actions.PageAction;
 import org.openqa.selenium.WebDriver;
 import ui.ILocator;
 import utils.TestImpl;
-import utils.WaitImpl;
+import actions.WaitImpl;
 
 public class BasePage {
 

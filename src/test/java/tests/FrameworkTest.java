@@ -80,7 +80,7 @@ public class FrameworkTest extends TestRunner {
         int secondProductPrice = Element(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
         LogUtil.log(secondProduct);
         LogUtil.log(String.valueOf(secondProductPrice));
-
+        WaitUntil(Rozetka.PROCESS_BLOCK).isVisible();
         resultPage.addProductToCart(randomProduct - 1);
 
         int totalPrice = Element(Rozetka.CART_TOTAL_COST).getNumber();
@@ -92,7 +92,6 @@ public class FrameworkTest extends TestRunner {
         resultPage.removeProduct();
         WaitUntil(Rozetka.PROCESS_BLOCK).notVisible();
         resultPage.removeProduct();
-        WaitUntil().textIsPresent("Корзина пуста");
         resultPage.closeCart();
         WaitUntil(Rozetka.CART).notVisible();
 

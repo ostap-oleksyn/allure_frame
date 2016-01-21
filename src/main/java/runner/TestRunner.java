@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeClass;
 import ui.ILocator;
 import utils.TestImpl;
 import utils.TestResult;
-import utils.WaitImpl;
+import actions.WaitImpl;
 
 
 public class TestRunner {
@@ -37,10 +37,6 @@ public class TestRunner {
 
     protected WaitImpl WaitUntil(final ILocator locator) {
         return new WaitImpl(driver, locator);
-    }
-
-    protected WaitImpl WaitUntil() {
-        return new WaitImpl(driver);
     }
 
     protected TestImpl Test() {

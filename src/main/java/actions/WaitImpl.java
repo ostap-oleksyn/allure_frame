@@ -1,4 +1,4 @@
-package utils;
+package actions;
 
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
@@ -28,25 +28,16 @@ public final class WaitImpl {
     }
 
     public WaitImpl at(final int position) {
-        verify();
         this.position = String.valueOf(position);
         return this;
     }
 
     public WaitImpl at(final String position) {
-        verify();
         this.position = position;
         return this;
     }
 
-    private void verify() {
-        if (this.locator == null) {
-            throw new IllegalArgumentException("No locator was passed to the WaitUntil() method");
-        }
-    }
-
     public void isVisible(final int... time) {
-        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -56,7 +47,6 @@ public final class WaitImpl {
     }
 
     public void notVisible(final int... time) {
-        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -66,7 +56,6 @@ public final class WaitImpl {
     }
 
     public void isPresent(final int... time) {
-        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -76,7 +65,6 @@ public final class WaitImpl {
     }
 
     public void isClickable(final int... time) {
-        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -86,7 +74,6 @@ public final class WaitImpl {
     }
 
     public void containsText(final String text, final int... time) {
-        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -96,7 +83,6 @@ public final class WaitImpl {
     }
 
     public void notContainsText(final String text, final int... time) {
-        verify();
         if (time.length > 0) {
             timeOut = time[0];
         }
@@ -104,14 +90,4 @@ public final class WaitImpl {
                 .withMessage(String.format("Text '%s' is still present in %s after %s seconds", text, new LocatorImpl(locator, position), timeOut))
                 .until((ExpectedCondition<Boolean>) webDriver -> !driver.findElement(new LocatorImpl(locator, position).get()).getText().contains(text));
     }
-
-    public void textIsPresent(final String text, final int... time) {
-        if (time.length > 0) {
-            timeOut = time[0];
-        }
-        new WebDriverWait(driver, timeOut)
-                .withMessage(String.format("Text '%s' is not present on the page after %s seconds", text, timeOut))
-                .until((ExpectedCondition<WebElement>) webDriver -> driver.findElement(By.xpath(".//*[contains(text(),'" + text + "')]")));
-    }
-
 }
