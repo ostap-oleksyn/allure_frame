@@ -3,7 +3,7 @@ package actions;
 
 import org.openqa.selenium.WebDriver;
 import ui.ILocator;
-import utils.TestImpl;
+import utils.TestUtil;
 
 public final class Action {
 
@@ -29,7 +29,7 @@ public final class Action {
         return new WaitImpl(driver, locator);
     }
 
-    public TestImpl Test() {
-        return new TestImpl(driver);
+    public TestUtil Test() {
+        return new TestUtil(driver);
     }
 }

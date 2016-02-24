@@ -6,7 +6,7 @@ import actions.ElementAction;
 import actions.PageAction;
 import org.openqa.selenium.WebDriver;
 import ui.ILocator;
-import utils.TestImpl;
+import utils.TestUtil;
 import actions.WaitImpl;
 
 public class BasePage {
@@ -39,8 +39,8 @@ public class BasePage {
         return new WaitImpl(driver);
     }
 
-    protected TestImpl Test(){
-        return new TestImpl(driver);
+    protected TestUtil Test(){
+        return new TestUtil(driver);
     }
 
 }

@@ -9,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import ui.ILocator;
-import utils.TestImpl;
+import utils.TestUtil;
 import utils.TestResult;
 import actions.WaitImpl;
 
@@ -39,8 +39,8 @@ public class TestRunner {
         return new WaitImpl(driver, locator);
     }
 
-    protected TestImpl Test() {
-        return new TestImpl(driver);
+    protected TestUtil Test() {
+        return new TestUtil(driver);
     }
 
     protected VerifyImpl Verify(final boolean condition) {

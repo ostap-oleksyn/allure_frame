@@ -7,16 +7,16 @@ import org.openqa.selenium.WebDriver;
 import org.testng.SkipException;
 import ru.yandex.qatools.allure.annotations.Step;
 
-public final class TestImpl {
+public final class TestUtil {
 
     private final WebDriver driver;
     private boolean takeScreenshot;
 
-    public TestImpl(final WebDriver driver) {
+    public TestUtil(final WebDriver driver) {
         this.driver = driver;
     }
 
-    public TestImpl withScreenshot() {
+    public TestUtil withScreenshot() {
         this.takeScreenshot = true;
         return this;
     }
@@ -31,30 +31,10 @@ public final class TestImpl {
 
     public void sleep(final int seconds) {
         LogUtil.log("TEST: Sleep for " + seconds + " second");
-        TimerImpl.sleep((long) (seconds * 1000));
-    }
-
-    public void sleep(final long milliseconds) {
-        TimerImpl.sleep(milliseconds);
-    }
-
-    public void timer(final int seconds) {
-        new TimerImpl(true, seconds);
-    }
-
-    public boolean timerCheck() {
-        if (TimerImpl.timerDuration != 0 && TimerImpl.running) {
-            return TimerImpl.getElapsedSeconds() <= TimerImpl.timerDuration;
-        } else {
-            throw new IllegalStateException("Timer has not been set. See Test().timer()");
-        }
-    }
-
-    public String timerTimestamp() {
-        if (TimerImpl.running) {
-            return TimerImpl.getElapsedFormatHHMMSS();
-        } else {
-            throw new IllegalStateException("Timer has not been set. See Test().timer()");
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException var3) {
+            Thread.currentThread().interrupt();
         }
     }
 
