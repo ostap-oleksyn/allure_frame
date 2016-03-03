@@ -5,6 +5,7 @@ import actions.ElementAction;
 import actions.PageAction;
 import actions.VerifyImpl;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -52,7 +53,7 @@ public class TestRunner {
     public void setUp() {
         //TODO - implement grid support
         result = new TestResult();
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
 
