@@ -10,7 +10,7 @@ import ru.yandex.qatools.allure.annotations.Attachment;
 import ru.yandex.qatools.allure.annotations.Step;
 import runner.TestRunner;
 
-public final class TestListener extends TestListenerAdapter {
+public final class TestResultListener extends TestListenerAdapter {
 
     @Override
     public void onTestFailure(final ITestResult testResult) {

@@ -3,6 +3,8 @@
 
 <suite name="Framework suite" parallel="tests" thread-count="5">
 
+    <parameter name="browser" value="firefox"/>
+
 
     <test name="Famework Test">
         <classes>

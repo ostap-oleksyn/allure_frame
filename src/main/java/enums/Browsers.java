@@ -2,7 +2,13 @@ package enums;
 
 
 public enum Browsers {
-    FIREFOX,
-    CHROME,
-    IE;
+    FIREFOX("FIREFOX"),
+    CHROME("CHROME"),
+    IE("IE");
+
+    String browser;
+
+    Browsers(String browser) {
+        this.browser = browser;
+    }
 }

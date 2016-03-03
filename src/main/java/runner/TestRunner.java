@@ -4,21 +4,25 @@ package runner;
 import actions.ElementAction;
 import actions.PageAction;
 import actions.VerifyImpl;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import ui.ILocator;
-import utils.TestUtil;
-import utils.TestResult;
 import actions.WaitImpl;
+import enums.Browsers;
+import listeners.TestResultListener;
+import listeners.VerifyListener;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.*;
+import ui.ILocator;
+import utils.DriverBuilder;
+import utils.TestResult;
+import utils.TestUtil;
 
+import java.util.Locale;
 
+@Listeners({TestResultListener.class, VerifyListener.class})
 public class TestRunner {
     private TestResult result;
 
     private WebDriver driver;
+    private DriverBuilder driverBuilder = new DriverBuilder();
 
     public WebDriver getDriver() {
         return driver;
@@ -49,11 +53,16 @@ public class TestRunner {
     }
 
 
+    @Parameters({"browser"})
     @BeforeClass
-    public void setUp() {
+    public void setUp(final String browser) {
         //TODO - implement grid support
         result = new TestResult();
-        driver = new ChromeDriver();
+
+        final Browsers browsers = Browsers.valueOf(browser.toUpperCase(Locale.ENGLISH));
+        driverBuilder.buildDriver(browsers);
+
+        driver = driverBuilder.getDriver();
         driver.manage().window().maximize();
     }
 
