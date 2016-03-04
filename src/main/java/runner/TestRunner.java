@@ -19,10 +19,9 @@ import java.util.Locale;
 
 @Listeners({TestResultListener.class, VerifyListener.class})
 public class TestRunner {
-    private TestResult result;
 
+    private TestResult result;
     private WebDriver driver;
-    private DriverBuilder driverBuilder = new DriverBuilder();
 
     public WebDriver getDriver() {
         return driver;
@@ -55,12 +54,14 @@ public class TestRunner {
 
     @Parameters({"browser"})
     @BeforeClass
-    public void setUp(final String browser) {
+    public void setUp(@Optional("firefox")final String browserParam) {
         //TODO - implement grid support
+
+        final DriverBuilder driverBuilder = new DriverBuilder();
         result = new TestResult();
 
-        final Browsers browsers = Browsers.valueOf(browser.toUpperCase(Locale.ENGLISH));
-        driverBuilder.buildDriver(browsers);
+        final Browsers browser = Browsers.valueOf(browserParam.toUpperCase(Locale.ENGLISH));
+        driverBuilder.buildDriver(browser);
 
         driver = driverBuilder.getDriver();
         driver.manage().window().maximize();

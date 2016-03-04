@@ -6,6 +6,7 @@ import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public final class DriverBuilder {
 
@@ -26,6 +27,12 @@ public final class DriverBuilder {
                 driver = new FirefoxDriver();
                 break;
             case IE:
+                if (SystemUtils.IS_OS_WINDOWS) {
+                    System.setProperty("webdriver.ie.driver", DRIVER_PATH + "IEDriverServer.exe");
+                } else if (SystemUtils.IS_OS_LINUX) {
+                    throw new IllegalStateException("Linux doesn't support Internet Explorer");
+                }
+                driver = new InternetExplorerDriver();
                 break;
             default:
                 driver = new FirefoxDriver();

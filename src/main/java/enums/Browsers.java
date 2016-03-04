@@ -6,7 +6,7 @@ public enum Browsers {
     CHROME("CHROME"),
     IE("IE");
 
-    String browser;
+    private String browser;
 
     Browsers(String browser) {
         this.browser = browser;
