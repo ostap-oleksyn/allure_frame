@@ -1,10 +1,8 @@
 package actions;
 
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -41,7 +39,7 @@ public final class WaitImpl {
         if (time.length > 0) {
             timeOut = time[0];
         }
-        new WebDriverWait(driver, timeOut).ignoring(ElementNotFoundException.class)
+        new WebDriverWait(driver, timeOut).ignoring(NoSuchElementException.class)
                 .withMessage(String.format("Element %s is not visible after %s seconds", new LocatorImpl(locator, position), timeOut))
                 .until(ExpectedConditions.visibilityOfElementLocated(new LocatorImpl(locator, position).get()));
     }
