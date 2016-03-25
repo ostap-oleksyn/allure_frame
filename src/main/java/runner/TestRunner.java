@@ -21,9 +21,10 @@ import java.util.Locale;
 public class TestRunner {
 
     private TestResult result;
+
     private WebDriver driver;
 
-    public WebDriver getDriver() {
+    protected WebDriver getWebDriver() {
         return driver;
     }
 

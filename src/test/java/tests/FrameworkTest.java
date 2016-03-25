@@ -32,11 +32,11 @@ public class FrameworkTest extends TestRunner {
 
         Element(Google.RESULT_LINK).click();
         Test().sleep(5);
-        getDriver().navigate().back();
+        getWebDriver().navigate().back();
 
         Element(Google.RESULT_LINK).at(10).click();
         Test().sleep(5);
-        getDriver().navigate().back();
+        getWebDriver().navigate().back();
 
         Element(Google.RESULT_LINK).click();
         Page().takeScreenshot();
@@ -53,7 +53,7 @@ public class FrameworkTest extends TestRunner {
     public void rozetkaTest() {
         Page().navigateTo("https://rozetka.com.ua");
 
-        HomePage homePage = new HomePage(getDriver());
+        HomePage homePage = new HomePage(getWebDriver());
         homePage.login();
 
         WaitUntil(Rozetka.PERSONAL_LINK).containsText("test");
