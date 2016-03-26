@@ -44,7 +44,7 @@ public final class WaitImpl implements IPosition {
     public void isDisplayed(final int... time) {
         checkTimeOut(time);
         new WebDriverWait(driver, timeOut).ignoring(NoSuchElementException.class)
-                .withMessage(String.format("element %s is not visible after %s seconds", new LocatorImpl(locator, position), timeOut))
+                .withMessage(String.format("Element %s is not visible after %s seconds", new LocatorImpl(locator, position), timeOut))
                 .until(ExpectedConditions.visibilityOfElementLocated(new LocatorImpl(locator, position).get()));
     }
 
