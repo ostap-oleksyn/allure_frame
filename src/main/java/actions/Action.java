@@ -9,27 +9,27 @@ public final class Action {
 
     private WebDriver driver;
 
-    public Action(WebDriver driver) {
+    public Action(final WebDriver driver) {
         this.driver = driver;
     }
 
-    public ElementAction Element(final ILocator locator) {
+    public ElementAction element(final ILocator locator) {
         return new ElementAction(driver, locator);
     }
 
-    public ElementAction Element(final ILocator overLocator, final ILocator clickLocator) {
+    public ElementAction element(final ILocator overLocator, final ILocator clickLocator) {
         return new ElementAction(driver, overLocator, clickLocator);
     }
 
-    public PageAction Page() {
+    public PageAction page() {
         return new PageAction(driver);
     }
 
-    public WaitImpl WaitUntil(final ILocator locator) {
+    public WaitImpl waitUntil(final ILocator locator) {
         return new WaitImpl(driver, locator);
     }
 
-    public TestUtil Test() {
+    public TestUtil test() {
         return new TestUtil(driver);
     }
 }

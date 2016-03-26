@@ -4,6 +4,7 @@ package actions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.annotations.Step;
 import ui.LocatorImpl;
@@ -40,7 +41,7 @@ public final class ElementActionImpl {
 
         return new WebDriverWait(driver, waitTime)
                 .ignoring(NoSuchElementException.class)
-                .withMessage("Element " + locator + " was not found after " + waitTime + " seconds timeout")
+                .withMessage("element " + locator + " was not found after " + waitTime + " seconds timeout")
                 .until(ExpectedConditions.visibilityOfElementLocated(locator.get()));
     }
 
@@ -86,7 +87,7 @@ public final class ElementActionImpl {
     public int getNumber() {
         final String text = getElement(locator).getText().replaceAll("\\D", "");
         if (text.length() == 0) {
-            throw new IllegalStateException("Element's text doesn't contain any numbers.");
+            throw new IllegalStateException("element's text doesn't contain any numbers.");
         }
         return Integer.parseInt(text);
     }
@@ -118,6 +119,18 @@ public final class ElementActionImpl {
 
     public void submit() {
         submit(this.locator);
+    }
+
+    public void selectByText(final String text) {
+        selectByText(locator, text);
+    }
+
+    public void selectByValue(final String value) {
+        selectByValue(locator, value);
+    }
+
+    public void selectByIndex(final int index) {
+        selectByIndex(locator, index);
     }
 
     @Step("Clicked {0}")
@@ -170,5 +183,23 @@ public final class ElementActionImpl {
     @Step("Executed JavaScript: ''{0}'' on {1}")
     public void executeScript(final String javaScript) {
         ((JavascriptExecutor) driver).executeScript(javaScript, getElement(locator));
+    }
+
+    @Step("Selected {0} with text {1}")
+    private void selectByText(final LocatorImpl locator, final String text) {
+        final Select select = new Select(getElement(locator));
+        select.selectByVisibleText(text);
+    }
+
+    @Step("Selected {0} at {1}")
+    private void selectByIndex(final LocatorImpl locator, final int index) {
+        final Select select = new Select(getElement(locator));
+        select.selectByIndex(index);
+    }
+
+    @Step("Selected {0} with value {1}")
+    private void selectByValue(final LocatorImpl locator, final String value) {
+        final Select select = new Select(getElement(locator));
+        select.selectByValue(value);
     }
 }
