@@ -20,7 +20,7 @@ public final class TestResultListener extends TestListenerAdapter {
         WebDriver driver = null;
         try {
             field = testResult.getTestClass().getRealClass().getSuperclass().getDeclaredField("driver");
-            field.setAccessible(false);
+            field.setAccessible(true);
             driver = (WebDriver) field.get(currentClass);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();

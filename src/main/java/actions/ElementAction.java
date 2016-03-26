@@ -7,7 +7,7 @@ import ui.LocatorImpl;
 
 import java.util.List;
 
-public final class ElementAction {
+public final class ElementAction implements IPosition {
 
     private final WebDriver driver;
     private final ILocator locator;
@@ -51,7 +51,7 @@ public final class ElementAction {
 
     public void mouseOverAndClick() {
         if (clickLocator == null) {
-            throw new IllegalArgumentException("Only one locator was passed to Element() method");
+            throw new IllegalArgumentException("Only one locator was passed to element() method");
         }
         new ElementActionImpl(new LocatorImpl(locator, position), new LocatorImpl(clickLocator, null), this.driver, timeOut).mouseOverAndClick();
     }
@@ -110,5 +110,17 @@ public final class ElementAction {
 
     public boolean containsText(final String text) {
         return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).containsText(text);
+    }
+
+    public void selectByText(final String text) {
+        new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByText(text);
+    }
+
+    public void selectByValue(final String value) {
+        new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByValue(value);
+    }
+
+    public void selectByIndex(final int index) {
+        new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByIndex(index);
     }
 }

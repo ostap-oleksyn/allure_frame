@@ -18,28 +18,28 @@ public class FrameworkTest extends TestRunner {
     @Test(enabled = false)
     @Severity(SeverityLevel.MINOR)
     public void googleTest() {
-        Page().navigateTo("https://google.com");
-        Element(Google.SEARCH_FIELD).type("docker");
-        Element(Google.SEARCH_BUTTON).click();
+        page().navigateTo("https://google.com");
+        element(Google.SEARCH_FIELD).type("docker");
+        element(Google.SEARCH_BUTTON).click();
 
-        Verify(1 == 1).withScreenshot().withMessage("test pass message").isTrue();
+        verify(1 == 1).withScreenshot().withMessage("test pass message").isTrue();
 
-        String t0 = Element(Google.RESULT_LINK).getText();
-        String t1 = Element(Google.RESULT_LINK).at(2).getText();
-        String t2 = Element(Google.RESULT_LINK).getText();
-        String t3 = Element(Google.RESULT_LINK).getText();
-        String t4 = Element(Google.RESULT_LINK).at(10).getText();
+        String t0 = element(Google.RESULT_LINK).getText();
+        String t1 = element(Google.RESULT_LINK).at(2).getText();
+        String t2 = element(Google.RESULT_LINK).getText();
+        String t3 = element(Google.RESULT_LINK).getText();
+        String t4 = element(Google.RESULT_LINK).at(10).getText();
 
-        Element(Google.RESULT_LINK).click();
-        Test().sleep(5);
+        element(Google.RESULT_LINK).click();
+        test().sleep(5);
         getWebDriver().navigate().back();
 
-        Element(Google.RESULT_LINK).at(10).click();
-        Test().sleep(5);
+        element(Google.RESULT_LINK).at(10).click();
+        test().sleep(5);
         getWebDriver().navigate().back();
 
-        Element(Google.RESULT_LINK).click();
-        Page().takeScreenshot();
+        element(Google.RESULT_LINK).click();
+        page().takeScreenshot();
 
         LogUtil.log(t0);
         LogUtil.log(t1);
@@ -51,24 +51,24 @@ public class FrameworkTest extends TestRunner {
     @Test(enabled = false)
     @Severity(SeverityLevel.CRITICAL)
     public void rozetkaTest() {
-        Page().navigateTo("https://rozetka.com.ua");
+        page().navigateTo("https://rozetka.com.ua");
 
         HomePage homePage = new HomePage(getWebDriver());
         homePage.login();
 
-        WaitUntil(Rozetka.PERSONAL_LINK).containsText("test");
+        waitUntil(Rozetka.PERSONAL_LINK).containsText("test");
 
         String searchTerm = "gtx 960";
         ResultPage resultPage = homePage.doSearchFor(searchTerm);
 
-        final int numberOfResults = Element(Rozetka.RESULT_LINK).getCount();
+        final int numberOfResults = element(Rozetka.RESULT_LINK).getCount();
 
         LogUtil.log("Total results: " + numberOfResults);
 
         int randomProduct = Generate.integer(1, 5);
         LogUtil.log("" + randomProduct);
-        String firstProduct = Element(Rozetka.RESULT_LINK).at(randomProduct).getText();
-        int firstProductPrice = Element(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
+        String firstProduct = element(Rozetka.RESULT_LINK).at(randomProduct).getText();
+        int firstProductPrice = element(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
         LogUtil.log(firstProduct);
         LogUtil.log(String.valueOf(firstProductPrice));
 
@@ -76,30 +76,30 @@ public class FrameworkTest extends TestRunner {
 
         randomProduct = Generate.integer(6, 17);
         LogUtil.log("" + (randomProduct - 1));
-        String secondProduct = Element(Rozetka.RESULT_LINK).at(randomProduct).getText();
-        int secondProductPrice = Element(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
+        String secondProduct = element(Rozetka.RESULT_LINK).at(randomProduct).getText();
+        int secondProductPrice = element(Rozetka.RESULT_PRODUCT_PRICE).at(randomProduct).getNumber();
         LogUtil.log(secondProduct);
         LogUtil.log(String.valueOf(secondProductPrice));
-        WaitUntil(Rozetka.PROCESS_BLOCK).isVisible();
+        waitUntil(Rozetka.PROCESS_BLOCK).isDisplayed();
         resultPage.addProductToCart(randomProduct - 1);
 
-        int totalPrice = Element(Rozetka.CART_TOTAL_COST).getNumber();
+        int totalPrice = element(Rozetka.CART_TOTAL_COST).getNumber();
 
         assertThat(totalPrice)
                 .as("Total price in cart doesn't match")
                 .isEqualTo(firstProductPrice + secondProductPrice);
 
         resultPage.removeProduct();
-        WaitUntil(Rozetka.PROCESS_BLOCK).notVisible();
+        waitUntil(Rozetka.PROCESS_BLOCK).notDisplayed();
         resultPage.removeProduct();
         resultPage.closeCart();
-        WaitUntil(Rozetka.CART).notVisible();
+        waitUntil(Rozetka.CART).notDisplayed();
 
         resultPage.logOut();
 
-        WaitUntil(Rozetka.PERSONAL_LINK).notContainsText("test");
+        waitUntil(Rozetka.PERSONAL_LINK).notContainsText("test");
 
-        Page().takeScreenshot();
+        page().takeScreenshot();
     }
 
     @Test
@@ -107,53 +107,53 @@ public class FrameworkTest extends TestRunner {
     public void rozetkaPriceFilterTest() {
         int maxRange = 3000;
 
-        Page().navigateTo("https://rozetka.com.ua");
+        page().navigateTo("https://rozetka.com.ua");
+        waitUntil(Google.IMAGES_TAB).isDisplayed();
+        page().executeScript("scroll(0, 750)");
 
-        Page().executeScript("scroll(0, 750)");
+        verify(1 == 1).withScreenshot().withMessage("test message").isFalse();
 
-        Verify(1 == 1).withScreenshot().withMessage("test message").isFalse();
-
-        Element(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
-        Element(Rozetka.MANUFECTURER).at("PocketBook").click();
+        element(Rozetka.PC_SIDE_MENU, Rozetka.EBOOK_SUB_MENU).mouseOverAndClick();
+        element(Rozetka.MANUFECTURER).at("PocketBook").click();
 
 
-        assertThat(Element(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
+        assertThat(element(Rozetka.ACTIVE_FILTER).at("PocketBook").isDisplayed())
                 .as("Manufacturer filter is displayed")
                 .isTrue();
 
 
-        int filteredProductsCount = Element(Rozetka.PRODUCT_NAME).getCount();
+        int filteredProductsCount = element(Rozetka.PRODUCT_NAME).getCount();
 
 
         for (int index = 1; index <= filteredProductsCount; index++) {
-            String productName = Element(Rozetka.PRODUCT_NAME).at(index).getText();
+            String productName = element(Rozetka.PRODUCT_NAME).at(index).getText();
 
             assertThat(productName)
                     .as("Filtered products contain manufacturer name")
                     .contains("PocketBook");
         }
 
-        Element(Rozetka.MAX_PRICE_FILTER).type(String.valueOf(maxRange));
-        Element(Rozetka.MAX_PRICE_FILTER).submit();
+        element(Rozetka.MAX_PRICE_FILTER).type(String.valueOf(maxRange));
+        element(Rozetka.MAX_PRICE_FILTER).submit();
 
-        assertThat(Element(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
+        assertThat(element(Rozetka.ACTIVE_FILTER).at(maxRange).isDisplayed())
                 .as("Price filter is displayed");
 
 
-        filteredProductsCount = Element(Rozetka.PRODUCT_NAME).getCount();
+        filteredProductsCount = element(Rozetka.PRODUCT_NAME).getCount();
 
         for (int index = 1; index <= filteredProductsCount; index++) {
-            int productPrice = Element(Rozetka.PRODUCT_PRICE).at(index).getNumber();
+            int productPrice = element(Rozetka.PRODUCT_PRICE).at(index).getNumber();
 
             assertThat(productPrice)
                     .as("Product price filter is applied")
                     .isBetween(1, maxRange);
         }
 
-        Element(Rozetka.ACTIVE_FILTER).at("PocketBook").click();
-        Element(Rozetka.ACTIVE_FILTER).at(String.valueOf(maxRange)).click();
+        element(Rozetka.ACTIVE_FILTER).at("PocketBook").click();
+        element(Rozetka.ACTIVE_FILTER).at(String.valueOf(maxRange)).click();
 
-        Page().takeScreenshot();
+        page().takeScreenshot();
 
     }
 }

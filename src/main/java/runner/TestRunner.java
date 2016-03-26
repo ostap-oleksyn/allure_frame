@@ -6,10 +6,11 @@ import actions.PageAction;
 import actions.VerifyImpl;
 import actions.WaitImpl;
 import enums.Browsers;
-import listeners.TestResultListener;
-import listeners.VerifyListener;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import ui.ILocator;
 import utils.DriverBuilder;
 import utils.TestResult;
@@ -17,7 +18,6 @@ import utils.TestUtil;
 
 import java.util.Locale;
 
-@Listeners({TestResultListener.class, VerifyListener.class})
 public class TestRunner {
 
     private TestResult result;
@@ -28,34 +28,34 @@ public class TestRunner {
         return driver;
     }
 
-    protected ElementAction Element(final ILocator locator) {
+    protected ElementAction element(final ILocator locator) {
         return new ElementAction(driver, locator);
     }
 
-    protected ElementAction Element(final ILocator overLocator, final ILocator clickLocator) {
+    protected ElementAction element(final ILocator overLocator, final ILocator clickLocator) {
         return new ElementAction(driver, overLocator, clickLocator);
     }
 
-    protected PageAction Page() {
+    protected PageAction page() {
         return new PageAction(driver);
     }
 
-    protected WaitImpl WaitUntil(final ILocator locator) {
+    protected WaitImpl waitUntil(final ILocator locator) {
         return new WaitImpl(driver, locator);
     }
 
-    protected TestUtil Test() {
+    protected TestUtil test() {
         return new TestUtil(driver);
     }
 
-    protected VerifyImpl Verify(final boolean condition) {
+    protected VerifyImpl verify(final boolean condition) {
         return new VerifyImpl(condition, driver, result);
     }
 
 
     @Parameters({"browser"})
     @BeforeClass
-    public void setUp(@Optional("firefox")final String browserParam) {
+    protected void setUp(@Optional("firefox") final String browserParam) {
         //TODO - implement grid support
 
         final DriverBuilder driverBuilder = new DriverBuilder();
@@ -69,7 +69,7 @@ public class TestRunner {
     }
 
     @AfterClass
-    public void tearDown() {
+    protected void tearDown() {
         driver.quit();
     }
 }
