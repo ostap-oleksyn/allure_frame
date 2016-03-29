@@ -16,6 +16,7 @@
         <allure.version>1.4.19</allure.version>
         <aspectj.version>1.8.7</aspectj.version>
         <apache.commons.version>3.4</apache.commons.version>
+        <suite.name>allure.xml</suite.name>
     </properties>
 
     <dependencies>
@@ -74,7 +75,7 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                     <suiteXmlFiles>
-                        <suiteXmlFile>allure.xml</suiteXmlFile>
+                        <suiteXmlFile>${suite.name}</suiteXmlFile>
                     </suiteXmlFiles>
                     <properties>
                         <property>
