@@ -108,7 +108,6 @@ public class FrameworkTest extends TestRunner {
         int maxRange = 3000;
 
         page().navigateTo("https://rozetka.com.ua");
-        waitUntil(Google.IMAGES_TAB).isDisplayed();
         page().executeScript("scroll(0, 750)");
 
         verify(1 == 1).withScreenshot().withMessage("test message").isFalse();
