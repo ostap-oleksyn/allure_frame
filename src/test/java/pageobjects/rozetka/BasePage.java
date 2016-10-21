@@ -23,11 +23,7 @@ public class BasePage {
         return new ElementAction(driver, locator);
     }
 
-    protected ElementAction Element(final ILocator overLocator, final ILocator clickLocator) {
-        return new ElementAction(driver, overLocator, clickLocator);
-    }
-
-    protected PageAction Page() {
+   protected PageAction Page() {
         return new PageAction(driver);
     }
 

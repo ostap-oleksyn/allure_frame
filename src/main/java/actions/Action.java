@@ -5,27 +5,23 @@ import org.openqa.selenium.WebDriver;
 import ui.ILocator;
 import utils.TestUtil;
 
-public final class Action {
+public class Action {
 
     private WebDriver driver;
 
-    public Action(final WebDriver driver) {
+    public Action(WebDriver driver) {
         this.driver = driver;
     }
 
-    public ElementAction element(final ILocator locator) {
+    public ElementAction element(ILocator locator) {
         return new ElementAction(driver, locator);
-    }
-
-    public ElementAction element(final ILocator overLocator, final ILocator clickLocator) {
-        return new ElementAction(driver, overLocator, clickLocator);
     }
 
     public PageAction page() {
         return new PageAction(driver);
     }
 
-    public WaitImpl waitUntil(final ILocator locator) {
+    public WaitImpl waitUntil(ILocator locator) {
         return new WaitImpl(driver, locator);
     }
 

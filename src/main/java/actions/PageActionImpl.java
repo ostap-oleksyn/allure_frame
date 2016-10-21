@@ -5,11 +5,11 @@ import org.openqa.selenium.*;
 import ru.yandex.qatools.allure.annotations.Attachment;
 import ru.yandex.qatools.allure.annotations.Step;
 
-public final class PageActionImpl {
+public class PageActionImpl {
 
-    private final WebDriver driver;
+    private WebDriver driver;
 
-    public PageActionImpl(final WebDriver driver) {
+    public PageActionImpl(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -25,7 +25,7 @@ public final class PageActionImpl {
     }
 
     @Step("Navigated to {0}")
-    public void navigate(final String url) {
+    public void navigate(String url) {
         driver.get(url);
     }
 
@@ -40,17 +40,17 @@ public final class PageActionImpl {
     }
 
     @Step("Switched to frame {0}")
-    public void switchToFrame(final int frameIndex) {
+    public void switchToFrame(int frameIndex) {
         driver.switchTo().frame(frameIndex);
     }
 
     @Step("Switched to frame {0}")
-    public void switchToFrame(final String frameName) {
+    public void switchToFrame(String frameName) {
         driver.switchTo().frame(frameName);
     }
 
     @Step("Switched to frame {0}")
-    public void switchToFrame(final WebElement element) {
+    public void switchToFrame(WebElement element) {
         driver.switchTo().frame(element);
     }
 
@@ -60,17 +60,17 @@ public final class PageActionImpl {
     }
 
     @Step("Accepted alert: {0}")
-    public void acceptAlert(final String alertText) {
+    public void acceptAlert(String alertText) {
         driver.switchTo().alert().accept();
     }
 
     @Step("Dismissed alert: {0}")
-    public void dismissAlert(final String alertText) {
+    public void dismissAlert(String alertText) {
         driver.switchTo().alert().dismiss();
     }
 
     @Step("Executed JavaScript: ''{0}''")
-    public void executeScript(final String javaScript) {
+    public void executeScript(String javaScript) {
         ((JavascriptExecutor) driver).executeScript(javaScript);
     }
 }

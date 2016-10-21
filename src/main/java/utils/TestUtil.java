@@ -7,12 +7,12 @@ import org.openqa.selenium.WebDriver;
 import org.testng.SkipException;
 import ru.yandex.qatools.allure.annotations.Step;
 
-public final class TestUtil {
+public class TestUtil {
 
-    private final WebDriver driver;
+    private WebDriver driver;
     private boolean takeScreenshot;
 
-    public TestUtil(final WebDriver driver) {
+    public TestUtil(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -21,16 +21,16 @@ public final class TestUtil {
         return this;
     }
 
-    public void skip(final String message) {
+    public void skip(String message) {
         logSkip(message);
     }
 
-    public void fail(final String message) {
+    public void fail(String message) {
         throw new TestFailedException(message);
     }
 
-    public void sleep(final int seconds) {
-        LogUtil.log("TEST: Sleep for " + seconds + " second");
+    public void sleep(int seconds) {
+        Log.info("TEST: Sleep for " + seconds + " second");
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException var3) {
@@ -39,7 +39,7 @@ public final class TestUtil {
     }
 
     @Step("TEST SKIPPED: {0}")
-    private void logSkip(final String message) {
+    private void logSkip(String message) {
         if (takeScreenshot) {
             new PageActionImpl(driver).takeScreenshot();
         }

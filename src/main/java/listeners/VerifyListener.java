@@ -9,21 +9,21 @@ import utils.TestResult;
 import java.lang.reflect.Field;
 
 
-public final class VerifyListener implements IInvokedMethodListener {
+public class VerifyListener implements IInvokedMethodListener {
     @Override
-    public void beforeInvocation(final IInvokedMethod iInvokedMethod, final ITestResult iTestResult) {
+    public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
     }
 
     @Override
-    public void afterInvocation(final IInvokedMethod iInvokedMethod, final ITestResult iTestResult) {
+    public void afterInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
         Field result;
-        final Throwable testException = iTestResult.getThrowable();
+        Throwable testException = iTestResult.getThrowable();
         if (iInvokedMethod.getTestMethod().isTest()) {
             try {
-                final Object object = iInvokedMethod.getTestMethod().getInstance();
+                Object object = iInvokedMethod.getTestMethod().getInstance();
                 result = iInvokedMethod.getTestMethod().getRealClass().getSuperclass().getDeclaredField("result");
                 result.setAccessible(true);
-                final TestResult isVerificationFailed = (TestResult) result.get(object);
+                TestResult isVerificationFailed = (TestResult) result.get(object);
 
                 if (isVerificationFailed.getResult()) {
                     iTestResult.setStatus(ITestResult.FAILURE);

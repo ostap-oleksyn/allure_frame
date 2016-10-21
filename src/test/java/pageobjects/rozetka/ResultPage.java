@@ -31,7 +31,8 @@ public class ResultPage extends BasePage {
 
     @Step("Logging out")
     public void logOut(){
-        Element(Rozetka.PERSONAL_LINK, Rozetka.LOGOUT_LINK).mouseOverAndClick();
+        Element(Rozetka.PERSONAL_LINK).hover();
+        Element(Rozetka.LOGOUT_LINK).click();
     }
 
 }

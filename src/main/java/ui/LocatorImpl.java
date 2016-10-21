@@ -4,16 +4,16 @@ package ui;
 import org.openqa.selenium.By;
 
 
-public final class LocatorImpl {
+public class LocatorImpl {
 
-    final private ILocator locator;
-    final private LocatorType locatorType;
-    final private String position;
+    private ILocator locator;
+    private LocatorType locatorType;
+    private String position;
     private String rawLocator;
     private String modifiedLocator;
 
 
-    public LocatorImpl(final ILocator locator, final String position) {
+    public LocatorImpl(ILocator locator, String position) {
         this.locator = locator;
         this.position = position;
         this.rawLocator = locator.getRawLocator();

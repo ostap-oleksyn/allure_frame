@@ -11,11 +11,11 @@ import ru.yandex.qatools.allure.annotations.Step;
 
 import java.lang.reflect.Field;
 
-public final class TestResultListener extends TestListenerAdapter {
+public class TestResultListener extends TestListenerAdapter {
 
     @Override
-    public void onTestFailure(final ITestResult testResult) {
-        final Object currentClass = testResult.getInstance();
+    public void onTestFailure(ITestResult testResult) {
+        Object currentClass = testResult.getInstance();
         Field field;
         WebDriver driver = null;
         try {
@@ -30,7 +30,7 @@ public final class TestResultListener extends TestListenerAdapter {
 
     @Step("[FAIL SCREENSHOT]")
     @Attachment(value = "{0}", type = "image/png")
-    private byte[] takeScreenshot(final String methodName, final WebDriver driver) {
+    private byte[] takeScreenshot(String methodName, WebDriver driver) {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 
     }

@@ -5,16 +5,16 @@ import org.openqa.selenium.WebDriver;
 import ru.yandex.qatools.allure.annotations.Step;
 import utils.TestResult;
 
-public final class VerifyImpl {
+public class VerifyImpl {
 
-    private final WebDriver driver;
-    private final boolean condition;
-    private final TestResult result;
+    private WebDriver driver;
+    private boolean condition;
+    private TestResult result;
     private boolean withScreenshot;
     private boolean withMessage;
     private String message = "";
 
-    public VerifyImpl(final boolean condition, final WebDriver driver, final TestResult result) {
+    public VerifyImpl(boolean condition, WebDriver driver, TestResult result) {
         this.driver = driver;
         this.condition = condition;
         this.result = result;
@@ -25,7 +25,7 @@ public final class VerifyImpl {
         return this;
     }
 
-    public VerifyImpl withMessage(final String message) {
+    public VerifyImpl withMessage(String message) {
         this.withMessage = true;
         this.message = message;
         return this;
@@ -50,14 +50,14 @@ public final class VerifyImpl {
     }
 
     @Step("VERIFICATION FAILED: {0}")
-    private void logFailedMessage(final String message) {
+    private void logFailedMessage(String message) {
         if (withScreenshot) {
             new PageActionImpl(driver).takeScreenshot();
         }
     }
 
     @Step("VERIFICATION PASSED: {0}")
-    private void logPassedMessage(final String message) {
+    private void logPassedMessage(String message) {
         if (withScreenshot) {
             new PageActionImpl(driver).takeScreenshot();
         }

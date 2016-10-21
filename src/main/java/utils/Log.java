@@ -3,13 +3,13 @@ package utils;
 
 import ru.yandex.qatools.allure.annotations.Step;
 
-public final class LogUtil {
+public class Log {
 
-    private LogUtil() {
+    private Log() {
     }
 
     @Step("{0}")
-    public static void log(final String message){
+    public static void info(String message){
         //intentionally empty
     }
 

@@ -7,36 +7,29 @@ import ui.LocatorImpl;
 
 import java.util.List;
 
-public final class ElementAction implements IPosition {
+public class ElementAction implements IPosition {
 
-    private final WebDriver driver;
-    private final ILocator locator;
-    private ILocator clickLocator;
+    private WebDriver driver;
+    private ILocator locator;
     private int timeOut;
     private String position;
 
-    public ElementAction(final WebDriver driver, final ILocator locator) {
+    public ElementAction(WebDriver driver, ILocator locator) {
         this.driver = driver;
         this.locator = locator;
     }
 
-    public ElementAction(final WebDriver driver, final ILocator locator, final ILocator clickLocator) {
-        this.driver = driver;
-        this.locator = locator;
-        this.clickLocator = clickLocator;
-    }
-
-    public ElementAction at(final int position) {
+    public ElementAction at(int position) {
         this.position = String.valueOf(position);
         return this;
     }
 
-    public ElementAction at(final String position) {
+    public ElementAction at(String position) {
         this.position = position;
         return this;
     }
 
-    public ElementAction wait(final int timeOut) {
+    public ElementAction wait(int timeOut) {
         this.timeOut = timeOut;
         return this;
     }
@@ -49,18 +42,11 @@ public final class ElementAction implements IPosition {
         new ElementActionImpl(new LocatorImpl(locator, position), this.driver, timeOut).hover();
     }
 
-    public void mouseOverAndClick() {
-        if (clickLocator == null) {
-            throw new IllegalArgumentException("Only one locator was passed to element() method");
-        }
-        new ElementActionImpl(new LocatorImpl(locator, position), new LocatorImpl(clickLocator, null), this.driver, timeOut).mouseOverAndClick();
-    }
-
     public void scrollTo() {
         new ElementActionImpl(new LocatorImpl(locator, position), this.driver, timeOut).scrollTo();
     }
 
-    public void type(final String text) {
+    public void type(String text) {
         new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).type(text);
     }
 
@@ -76,11 +62,11 @@ public final class ElementAction implements IPosition {
         return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).getText();
     }
 
-    public String getAttribute(final String attribute) {
+    public String getAttribute(String attribute) {
         return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).getAttribute(attribute);
     }
 
-    public void setAttribute(final String attribute, final String value) {
+    public void setAttribute(String attribute, String value) {
         new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).setAttribute(attribute, value);
     }
 
@@ -92,7 +78,7 @@ public final class ElementAction implements IPosition {
         return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).getNumber();
     }
 
-    public void executeScript(final String javaScript) {
+    public void executeScript(String javaScript) {
         new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).executeScript(javaScript);
     }
 
@@ -108,19 +94,19 @@ public final class ElementAction implements IPosition {
         return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).isEnabled();
     }
 
-    public boolean containsText(final String text) {
+    public boolean containsText(String text) {
         return new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).containsText(text);
     }
 
-    public void selectByText(final String text) {
+    public void selectByText(String text) {
         new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByText(text);
     }
 
-    public void selectByValue(final String value) {
+    public void selectByValue(String value) {
         new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByValue(value);
     }
 
-    public void selectByIndex(final int index) {
+    public void selectByIndex(int index) {
         new ElementActionImpl(new LocatorImpl(locator, position), driver, timeOut).selectByIndex(index);
     }
 }

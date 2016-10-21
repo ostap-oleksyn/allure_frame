@@ -6,11 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ui.ILocator;
 
-public final class PageAction {
+public class PageAction {
 
-    private final WebDriver driver;
+    private WebDriver driver;
 
-    public PageAction(final WebDriver driver) {
+    public PageAction(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -18,7 +18,7 @@ public final class PageAction {
         new PageActionImpl(this.driver).refresh();
     }
 
-    public void navigateTo(final String url) {
+    public void navigateTo(String url) {
         new PageActionImpl(this.driver).navigate(url);
     }
 
@@ -38,16 +38,16 @@ public final class PageAction {
         return driver.getCurrentUrl();
     }
 
-    public void switchToFrame(final int frameIndex) {
+    public void switchToFrame(int frameIndex) {
         new PageActionImpl(driver).switchToFrame(frameIndex);
     }
 
-    public void switchToFrame(final String frameName) {
+    public void switchToFrame(String frameName) {
         new PageActionImpl(driver).switchToFrame(frameName);
     }
 
-    public void switchToFrame(final ILocator locator) {
-        final WebElement element = new ElementAction(driver, locator).getWebElement();
+    public void switchToFrame(ILocator locator) {
+        WebElement element = new ElementAction(driver, locator).getWebElement();
         new PageActionImpl(driver).switchToFrame(element);
     }
 
@@ -56,12 +56,12 @@ public final class PageAction {
     }
 
     public void acceptAlert() {
-        final String alertText = driver.switchTo().alert().getText();
+        String alertText = driver.switchTo().alert().getText();
         new PageActionImpl(driver).acceptAlert(alertText);
     }
 
     public void dismissAlert() {
-        final String alertText = driver.switchTo().alert().getText();
+        String alertText = driver.switchTo().alert().getText();
         new PageActionImpl(driver).dismissAlert(alertText);
     }
 
@@ -69,7 +69,7 @@ public final class PageAction {
         return driver.switchTo().alert().getText();
     }
 
-    public void executeScript(final String javaScript) {
+    public void executeScript(String javaScript) {
         new PageActionImpl(driver).executeScript(javaScript);
     }
 
@@ -77,7 +77,7 @@ public final class PageAction {
         new PageActionImpl(this.driver).takeScreenshot();
     }
 
-    public boolean hasText(final String text) {
+    public boolean hasText(String text) {
         return !driver.findElements(By.xpath(".//*[contains(text(),'" + text + "')]")).isEmpty();
     }
 

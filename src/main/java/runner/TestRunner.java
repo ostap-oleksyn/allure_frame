@@ -28,19 +28,15 @@ public class TestRunner {
         return driver;
     }
 
-    protected ElementAction element(final ILocator locator) {
+    protected ElementAction element(ILocator locator) {
         return new ElementAction(driver, locator);
-    }
-
-    protected ElementAction element(final ILocator overLocator, final ILocator clickLocator) {
-        return new ElementAction(driver, overLocator, clickLocator);
     }
 
     protected PageAction page() {
         return new PageAction(driver);
     }
 
-    protected WaitImpl waitUntil(final ILocator locator) {
+    protected WaitImpl waitUntil(ILocator locator) {
         return new WaitImpl(driver, locator);
     }
 
@@ -48,20 +44,20 @@ public class TestRunner {
         return new TestUtil(driver);
     }
 
-    protected VerifyImpl verify(final boolean condition) {
+    protected VerifyImpl verify(boolean condition) {
         return new VerifyImpl(condition, driver, result);
     }
 
 
     @Parameters({"browser"})
     @BeforeClass
-    protected void setUp(@Optional("firefox") final String browserParam) {
+    protected void setUp(@Optional("firefox") String browserParam) {
         //TODO - implement grid support
 
-        final DriverBuilder driverBuilder = new DriverBuilder();
+        DriverBuilder driverBuilder = new DriverBuilder();
         result = new TestResult();
 
-        final Browsers browser = Browsers.valueOf(browserParam.toUpperCase(Locale.ENGLISH));
+        Browsers browser = Browsers.valueOf(browserParam.toUpperCase(Locale.ENGLISH));
         driverBuilder.buildDriver(browser);
 
         driver = driverBuilder.getDriver();
