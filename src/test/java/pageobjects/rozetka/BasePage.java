@@ -16,23 +16,23 @@ public class BasePage<T extends ILocator> {
         this.driver = driver;
     }
 
-    protected ElementAction Element(final ILocator locator) {
+    protected ElementAction element(final ILocator locator) {
         return new ElementAction(driver, locator);
     }
 
-    protected PageAction Page() {
+    protected PageAction page() {
         return new PageAction(driver);
     }
 
-    protected WaitImpl WaitUntil(final ILocator locator) {
+    protected WaitImpl waitUntil(final ILocator locator) {
         return new WaitImpl(driver, locator);
     }
 
-    protected WaitImpl WaitUntil() {
+    protected WaitImpl waitUntil() {
         return new WaitImpl(driver);
     }
 
-    protected TestUtil Test() {
+    protected TestUtil test() {
         return new TestUtil(driver);
     }
 
